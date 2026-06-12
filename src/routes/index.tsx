@@ -1,70 +1,565 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useEffect } from 'react'
-import { AdminNavbar } from '#/components/AdminNavbar'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { Navbar } from '../components/Navbar'
 import { readContent } from '#/lib/content'
-import { isAuthenticated } from '#/lib/auth'
+import { RecyclingGame, Leaderboard } from '#/components/RecyclingGame'
+import { ImpactCalculator } from '#/components/ImpactCalculator'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { shouldReduceMotion } from '#/lib/browser'
 
 export const Route = createFileRoute('/')({
   loader: async () => readContent(),
-  component: AdminDashboard,
+  component: Home,
 })
 
-const sections = [
-  { key: 'home', label: 'Home', desc: 'Landing page hero, pillars, stats', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-  { key: 'solutions', label: 'Solutions', desc: 'Collection, Data Destruction, EPR, Recovery', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-  { key: 'innovation', label: 'Innovation', desc: 'R&D Labs, Future Tech, Circular Economy', icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' },
-  { key: 'impact-insights', label: 'Impact & Insights', desc: 'Sustainability, E-Waste Facts, Resources', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { key: 'about', label: 'About Us', desc: 'About page content and links', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { key: 'history', label: 'Our History', desc: 'History page content', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { key: 'learn', label: 'Learn', desc: 'Educational recycling page - quiz, game, pledge', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', },
-  { key: 'careers', label: 'Careers', desc: 'Job categories, roles, and why Terionix', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-  { key: 'contact', label: 'Contact Us', desc: 'Contact form fields and segments', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-  { key: 'settings', label: 'Site Settings', desc: 'WhatsApp, social media links', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
-  { key: 'game', label: 'Recycling Game', desc: 'Game items and leaderboard', icon: 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { key: 'json', label: 'Raw JSON', desc: 'View entire content.json data', icon: 'M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184' },
-]
+function AnimatedHeading({ text }: { text: string }) {
+  const ref = useRef<HTMLHeadingElement>(null)
 
-function AdminDashboard() {
-  const navigate = useNavigate()
-  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/login' }) }, [navigate])
-  const data = Route.useLoaderData()!
+  useEffect(() => {
+    if (shouldReduceMotion()) return
+    const el = ref.current
+    if (!el) return
+    const words = el.querySelectorAll('.word')
+    gsap.fromTo(words,
+      { opacity: 0, y: 30, rotateX: -40 },
+      {
+        opacity: 1, y: 0, rotateX: 0,
+        duration: 0.7,
+        stagger: 0.04,
+        ease: 'back.out(1.4)',
+      }
+    )
+  }, [])
+
+  return (
+    <h1 ref={ref} className="font-title text-5xl sm:text-7xl lg:text-8xl font-bold text-text mb-6 leading-[1.1]">
+      {text.split(' ').map((word, i) => (
+        <span key={i} className="word inline-block mr-[0.3rem]">{word}</span>
+      ))}
+    </h1>
+  )
+}
+
+function Home() {
+  const content = Route.useLoaderData()!
+  const { tagline, heroTitle, heroSubtitle, matrixCards, trustStats, authorization, audience, impactCalculator, corporateDashboard, whyTerionix } = content.home
+  const gameRef = useRef<HTMLDivElement>(null)
+
   return (
     <div className="font-sans text-text">
-      <AdminNavbar active="Home" links={data.navbar.links} logo={data.site.logo} siteName={data.site.name} />
-      <main className="pt-32 pb-24 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-10 motion-preset-slide-up">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-8 h-1 bg-accent rounded-full" />
-              <span className="w-16 h-1 bg-primary/30 rounded-full" />
-            </div>
-            <h1 className="font-title text-4xl font-bold mb-2">Admin Panel</h1>
-            <p className="text-text/60">Edit website content. Changes are saved to content.json.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {sections.map((s, i) => (
-              <a
-                key={s.key}
-                href={`/${s.key}`}
-                style={{ animationDelay: `${(i + 1) * 100}ms` }}
-                className="group block p-6 rounded-2xl border border-primary/10 bg-white/40 backdrop-blur-sm hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 motion-preset-slide-up"
+      <Navbar active="/" links={content.navbar.links} cta={content.navbar.cta} logo={content.site.logo} siteName={content.site.name} socialLinks={content.social?.links || []} />
+
+      <main className="relative overflow-hidden">
+        {/* ====== STICKY SIDE NAV — Explore CTAs (collapsed, expands on hover) ====== */}
+        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-end gap-1">
+          {audience.segments.map((segment: any, i: number) => {
+            const sideStyles = [
+              'bg-primary/90 hover:bg-primary text-white border-l-2 border-primary/50',
+              'bg-secondary/90 hover:bg-secondary text-white border-l-2 border-secondary/50',
+              'bg-accent/90 hover:bg-accent text-white border-l-2 border-accent/50'
+            ]
+            const sideIcons = [
+              <svg key="b2b" className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>,
+              <svg key="acad" className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" /></svg>,
+              <svg key="indiv" className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+            ]
+            return (
+              <Link
+                key={segment.id}
+                to={segment.cta.href}
+                className={`group relative flex items-center gap-2.5 pl-3 pr-4 py-3 rounded-l-xl transition-all duration-300 text-sm font-semibold w-12 hover:w-60 overflow-hidden ${sideStyles[i]}`}
+                title={segment.title}
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300 shrink-0">
-                    <svg className="w-6 h-6 text-primary group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d={s.icon} />
-                    </svg>
+                <span className="flex items-center gap-2.5 whitespace-nowrap">
+                  {sideIcons[i]}
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{segment.cta.label}</span>
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+        {/* ====== 1. HERO SECTION ====== */}
+        <section className="relative min-h-screen flex items-center justify-center px-4 pt-16">
+          <div className="absolute inset-0 -z-10">
+            <div className="aurora-bg">
+              <div className="aurora-wave bg-primary/10" style={{ top: '-50%', left: '-30%', animationDelay: '0s' }} />
+              <div className="aurora-wave bg-secondary/8" style={{ top: '-30%', right: '-20%', animationDelay: '-4s' }} />
+              <div className="aurora-wave bg-accent/6" style={{ bottom: '-40%', left: '10%', animationDelay: '-8s' }} />
+            </div>
+            <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl motion-preset-float motion-duration-4000" />
+            <div className="absolute bottom-40 left-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl motion-preset-float motion-duration-5000 motion-delay-1000" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl motion-preset-pulse motion-duration-6000" />
+          </div>
+
+          <div className="max-w-5xl mx-auto text-center relative">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-8 motion-preset-slide-up motion-duration-700">
+              <span className="w-2 h-2 rounded-full bg-primary motion-preset-pulse" />
+              {tagline}
+            </div>
+
+            <AnimatedHeading text={heroTitle} />
+
+            <p className="text-lg sm:text-xl text-text/60 max-w-2xl mx-auto mb-10 motion-preset-slide-up motion-duration-700 motion-delay-200 font-light">
+              {heroSubtitle}
+            </p>
+
+            {/* ====== WHO WE CATER TO — Cards replacing old buttons ====== */}
+            <div className="mt-10 motion-preset-slide-up motion-duration-700 motion-delay-300">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+                {audience.heading}
+              </div>
+              <div className="grid md:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto text-left">
+                {audience.segments.map((segment: any, i: number) => (
+                  <div
+                    key={segment.id}
+                    className="group bg-white/50 backdrop-blur-sm rounded-2xl border border-primary/10 p-5 hover:border-primary/30 hover:bg-white/70 hover:shadow-xl transition-all duration-500 card-hover flex flex-col"
+                  >
+                    {/* Icon */}
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center mb-3.5 transition-all duration-500
+                      ${i === 0 ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white' : ''}
+                      ${i === 1 ? 'bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white' : ''}
+                      ${i === 2 ? 'bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white' : ''}
+                    `}>
+                      {segment.icon === 'building' && (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+                      )}
+                      {segment.icon === 'academic' && (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                        </svg>
+                      )}
+                      {segment.icon === 'user' && (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                      )}
+                    </div>
+
+                    <h3 className={`font-title text-base font-bold text-text mb-2 transition-colors
+                      ${i === 0 ? 'group-hover:text-primary' : ''}
+                      ${i === 1 ? 'group-hover:text-secondary' : ''}
+                      ${i === 2 ? 'group-hover:text-accent' : ''}
+                    `}>{segment.title}</h3>
+                    <p className="text-text/60 text-sm leading-relaxed mb-4 flex-grow">{segment.description}</p>
+
+                    {/* CTA */}
+                    <Link
+                      to={segment.cta.href}
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-500 w-fit
+                        ${i === 0 ? 'bg-primary/10 text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary' : ''}
+                        ${i === 1 ? 'bg-secondary/10 text-secondary hover:bg-secondary hover:text-white border border-secondary/20 hover:border-secondary' : ''}
+                        ${i === 2 ? 'bg-accent/10 text-accent hover:bg-accent hover:text-white border border-accent/20 hover:border-accent' : ''}
+                      `}
+                    >
+                      {segment.cta.label}
+                      <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </Link>
                   </div>
-                  <div>
-                    <h2 className="font-title text-lg font-bold text-text group-hover:text-primary transition-colors">{s.label}</h2>
-                    <p className="text-sm text-text/60 mt-1">{s.desc}</p>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 motion-preset-bounce motion-duration-2000 motion-loop-infinite">
+            <svg className="w-6 h-6 text-text/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </section>
+
+        {/* ====== 2. AUTHORIZATION & TRUST ANCHOR ====== */}
+        <section className="px-4 py-20 relative">
+          <div className="absolute top-0 left-0 right-0 section-divider" />
+
+          <div className="max-w-5xl mx-auto">
+            {/* TNPCB Authorization */}
+            <div className="text-center mb-16 motion-preset-slide-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-6">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Verified & Certified
+              </div>
+              <h2 className="font-title text-2xl sm:text-3xl font-bold text-text mb-4">{authorization.title}</h2>
+              <p className="text-text/60 max-w-3xl mx-auto leading-relaxed">{authorization.description}</p>
+            </div>
+
+            {/* Trust Stats */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 motion-preset-slide-up motion-delay-200">
+              {trustStats.map((stat: any, i: number) => (
+                <div
+                  key={i}
+                  className="bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-6 text-center hover:border-primary/20 hover:bg-white/60 transition-all duration-300 card-hover"
+                >
+                  <div className="font-title text-3xl sm:text-4xl font-bold text-gradient-green mb-1">{stat.value}</div>
+                  <div className="text-xs text-text/40 font-medium uppercase tracking-wider">{stat.unit}</div>
+                  <div className="text-sm text-text/60 mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== 3. CORPORATE DASHBOARD — FEATURES SHOWCASE ====== */}
+        <section className="px-4 py-24 relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+          <div className="max-w-6xl mx-auto motion-preset-slide-up">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-4">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                </svg>
+                Corporate Portal
+              </div>
+              <h2 className="font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4">
+                {corporateDashboard.title}
+              </h2>
+              <p className="text-text/60 max-w-2xl mx-auto text-lg">{corporateDashboard.subtitle}</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {corporateDashboard.features.map((feature: any, i: number) => {
+                const iconColors = [
+                  'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white border-primary/20',
+                  'bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white border-secondary/20',
+                  'bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white border-accent/20',
+                  'bg-primary/10 text-primary group-hover:bg-primary-deep group-hover:text-white border-primary/20'
+                ]
+                return (
+                  <div
+                    key={i}
+                    className="group bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-6 hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover text-center"
+                    style={{ animationDelay: `${i * 100}ms` }}
+                  >
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 transition-all duration-500 ${iconColors[i]}`}>
+                      {feature.icon === 'calendar' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                        </svg>
+                      )}
+                      {feature.icon === 'tracking' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                      )}
+                      {feature.icon === 'certificate' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                        </svg>
+                      )}
+                      {feature.icon === 'impact' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                        </svg>
+                      )}
+                    </div>
+                    <h3 className="font-title text-lg font-bold text-text mb-3 group-hover:text-primary transition-colors">{feature.title}</h3>
+                    <p className="text-text/60 text-sm leading-relaxed">{feature.description}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== 4. WHY TERIONIX — ENTERPRISE PILLARS (Data Security, Legal Compliance, Green PR/ESG) ====== */}
+        <section className="px-4 py-24 relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16 motion-preset-slide-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-4">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
+                Why Terionix
+              </div>
+              <h2 className="font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4">
+                {whyTerionix.heading}
+              </h2>
+              <p className="text-text/60 max-w-2xl mx-auto">{whyTerionix.subtitle}</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+              {whyTerionix.pillars.map((pillar: any, i: number) => {
+                const pillarStyles = [
+                  'border-primary/20 hover:border-primary/40',
+                  'border-secondary/20 hover:border-secondary/40',
+                  'border-accent/20 hover:border-accent/40'
+                ]
+                const iconBg = [
+                  'bg-primary/10 text-primary group-hover:bg-primary',
+                  'bg-secondary/10 text-secondary group-hover:bg-secondary',
+                  'bg-accent/10 text-accent group-hover:bg-accent'
+                ]
+                return (
+                  <div
+                    key={i}
+                    className={`group bg-white/40 backdrop-blur-sm rounded-2xl border p-8 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover motion-preset-slide-up ${pillarStyles[i]}`}
+                    style={{ animationDelay: `${i * 150}ms` }}
+                  >
+                    {/* Icon */}
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:text-white ${iconBg[i]}`}>
+                      {pillar.icon === 'lock' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                      )}
+                      {pillar.icon === 'shield' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                        </svg>
+                      )}
+                      {pillar.icon === 'trending' && (
+                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                        </svg>
+                      )}
+                    </div>
+
+                    <h3 className={`font-title text-xl font-bold text-text mb-4 transition-colors
+                      ${i === 0 ? 'group-hover:text-primary' : ''}
+                      ${i === 1 ? 'group-hover:text-secondary' : ''}
+                      ${i === 2 ? 'group-hover:text-accent' : ''}
+                    `}>{pillar.title}</h3>
+                    <p className="text-text/60 leading-relaxed text-sm">{pillar.body}</p>
+
+                    {/* Bottom accent */}
+                    <div className={`mt-6 w-12 h-1 rounded-full transition-all duration-500 group-hover:w-full
+                      ${i === 0 ? 'bg-primary/30 group-hover:bg-primary' : ''}
+                      ${i === 1 ? 'bg-secondary/30 group-hover:bg-secondary' : ''}
+                      ${i === 2 ? 'bg-accent/30 group-hover:bg-accent' : ''}
+                    `} />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== 5. MATRIX GRID — 3 VALUE PILLARS ====== */}
+        <section className="px-4 py-24 relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16 motion-preset-slide-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-4">
+                Our Core Pillars
+              </div>
+              <h2 className="font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4">
+                Built on <span className="text-gradient">Trust & Innovation</span>
+              </h2>
+              <p className="text-text/60 max-w-2xl mx-auto">Three pillars that define every aspect of our e-waste management services.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+              {matrixCards.map((card: any, i: number) => (
+                <div
+                  key={i}
+                  className="group bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-8 hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover motion-preset-slide-up"
+                  style={{ animationDelay: `${i * 150}ms` }}
+                >
+                  {/* Icon */}
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 
+                    ${i === 0 ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white' : ''}
+                    ${i === 1 ? 'bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white' : ''}
+                    ${i === 2 ? 'bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white' : ''}
+                  `}>
+                    {card.icon === 'shield' && (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                      </svg>
+                    )}
+                    {card.icon === 'lock' && (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                      </svg>
+                    )}
+                    {card.icon === 'cpu' && (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                      </svg>
+                    )}
+                  </div>
+
+                  <h3 className="font-title text-xl font-bold text-text mb-3 group-hover:text-primary transition-colors">{card.title}</h3>
+                  <p className="text-text/60 leading-relaxed mb-6 text-sm">{card.description}</p>
+
+                  {/* Stat badge */}
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+                    ${i === 0 ? 'bg-primary/10 text-primary' : ''}
+                    ${i === 1 ? 'bg-secondary/10 text-secondary' : ''}
+                    ${i === 2 ? 'bg-accent/10 text-accent' : ''}
+                  `}>
+                    {card.statIcon === 'check' && (
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    )}
+                    {card.statIcon === 'shield' && (
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                      </svg>
+                    )}
+                    {card.statIcon === 'trending' && (
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                      </svg>
+                    )}
+                    {card.stat}
                   </div>
                 </div>
-              </a>
-            ))}
+              ))}
+            </div>
           </div>
+        </section>
+
+
+
+
+
+        {/* ====== 6. E-WASTE IMPACT CALCULATOR ====== */}
+        <section className="px-4 py-24 relative">
+          <div className="absolute top-0 left-0 right-0 section-divider" />
+          <div className="absolute bottom-40 left-10 w-80 h-80 bg-secondary/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
+
+          <div className="max-w-5xl mx-auto motion-preset-slide-up">
+            <ImpactCalculator
+              title={impactCalculator.title}
+              description={impactCalculator.description}
+              items={impactCalculator.items}
+            />
+          </div>
+        </section>
+
+        {/* ====== 7. GAMIFIED CHALLENGE — RECYCLING GAME ====== */}
+        <section ref={gameRef} className="px-4 py-24 relative scroll-mt-24" id="game-section">
+          <div className="absolute top-0 left-0 right-0 section-divider" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12 motion-preset-slide-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-4">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Take the E-Waste Challenge
+              </div>
+              <h2 className="font-title text-3xl sm:text-4xl font-bold text-text mb-4">
+                Test Your <span className="text-gradient">Recycling IQ</span>
+              </h2>
+              <p className="text-text/60 max-w-xl mx-auto">Learn what's recyclable while racing against the clock. Complete the challenge and schedule a cleanup drive.</p>
+            </div>
+
+            <div className="bg-white/50 backdrop-blur-xl rounded-3xl border border-primary/10 p-8 max-w-md mx-auto shadow-2xl shadow-primary/5 motion-preset-pop motion-duration-700 card-hover">
+              <RecyclingGame items={content.game.items} />
+              <Leaderboard />
+            </div>
+
+            {/* Post-game CTA hint */}
+            <div className="text-center mt-8 text-sm text-text/40 motion-preset-fade">
+              <span className="inline-flex items-center gap-1.5">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Complete the challenge and schedule a free household e-waste pickup
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== FOOTER ====== */}
+        <div className="h-1 bg-gradient-to-r from-primary via-secondary to-accent relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 blur-sm" />
         </div>
+
+        <footer className="bg-background/80 py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-5 gap-8 mb-8">
+              <div className="md:col-span-2">
+                <img src={content.site.logo} alt={content.site.name} className="h-20 w-auto mb-4" />
+                <p className="text-text/50 text-sm leading-relaxed max-w-md">
+                  Responsible e-waste management for a sustainable future. TNPCB authorized, CPCB compliant.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-title font-bold text-text text-sm mb-3 uppercase tracking-wider">Quick Links</h4>
+                <div className="space-y-2">
+                  {content.navbar.links.map((link: any) => (
+                    <div key={link.name}>
+                      {link.children?.map((child: any) => (
+                        <Link key={child.name} to={child.to} className="block text-sm text-text/50 hover:text-primary transition-colors">
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-title font-bold text-text text-sm mb-3 uppercase tracking-wider">Contact</h4>
+                <div className="space-y-2 text-sm text-text/50">
+                  <p>Tamil Nadu, India</p>
+                  <Link to="/contact" className="block text-primary hover:text-primary-deep transition-colors font-medium">
+                    Get in Touch
+                  </Link>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-title font-bold text-text text-sm mb-3 uppercase tracking-wider">Follow Us</h4>
+                <div className="flex flex-wrap gap-3">
+                  {content.social?.links?.map((link: { platform: string; url: string; label: string }) => (
+                    <a
+                      key={link.platform}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center text-text/40 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                      aria-label={link.label}
+                    >
+                      <FooterSocialIcon platform={link.platform} />
+                    </a>
+                  ))}
+                </div>
+                <p className="text-xs text-text/30 mt-3">Follow us for sustainability updates and e-waste tips.</p>
+              </div>
+            </div>
+            <div className="border-t border-primary/10 pt-6 text-center">
+              <p className="text-xs text-text/30">
+                &copy; {new Date().getFullYear()} Terionix. All rights reserved. — Where Circuits Bloom.
+              </p>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
+  )
+}
+
+function FooterSocialIcon({ platform }: { platform: string }) {
+  const paths: Record<string, string> = {
+    linkedin: 'M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z',
+    instagram: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z',
+    facebook: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z',
+    twitter: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z',
+    youtube: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
+  }
+  const path = paths[platform] || paths.linkedin
+  return (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d={path} />
+    </svg>
   )
 }

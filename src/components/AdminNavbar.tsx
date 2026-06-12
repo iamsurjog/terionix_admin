@@ -22,26 +22,26 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
 
   const handleLogout = async () => {
     await logout()
-    navigate({ to: '/login' })
+    navigate({ to: '/admin/login' })
   }
 
   const isChildActive = (children?: ChildLink[]) => {
     if (!children) return false
-    return children.some((child) => location.pathname === child.to)
+    return children.some((child) => location.pathname === `/admin${child.to}`)
   }
 
   const isAnyActive = (link: NavLink) => {
     if (link.type === 'dropdown' && link.children) {
       return isChildActive(link.children)
     }
-    return location.pathname === link.to
+    return location.pathname === `/admin${link.to}`
   }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-primary/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <a href="/" className="flex items-center">
+          <a href="/admin" className="flex items-center">
             <img src={logo} alt={siteName} className="h-30 w-auto" />
           </a>
           <div className="w-px h-8 bg-primary/20" />
@@ -87,16 +87,16 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
                     {link.children.map((child) => (
                       <a
                         key={child.name}
-                        href={child.to}
+                        href={`/admin${child.to}`}
                         className={`block px-5 py-2.5 font-sans text-sm transition-all duration-200 ${
-                          location.pathname === child.to
+                          location.pathname === `/admin${child.to}`
                             ? 'text-primary font-semibold bg-primary/5'
                             : 'text-text/70 hover:text-primary hover:bg-primary/5'
                         }`}
                       >
                         <span className="flex items-center gap-2">
                           <span className={`w-1 h-1 rounded-full transition-all ${
-                            location.pathname === child.to ? 'bg-primary scale-150' : 'bg-transparent'
+                            location.pathname === `/admin${child.to}` ? 'bg-primary scale-150' : 'bg-transparent'
                           }`} />
                           {child.name}
                         </span>
@@ -108,7 +108,7 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
             ) : (
               <a
                 key={link.name}
-                href={link.to}
+                href={`/admin${link.to}`}
                 className={`px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${
                   isAnyActive(link)
                     ? 'text-white bg-primary shadow-lg shadow-primary/25'
@@ -122,7 +122,7 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
 
           {/* Hardcoded admin extras */}
           <a
-            href="/game"
+            href="/admin/game"
             className={`px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${
               active === 'Recycling Game' ? 'text-white bg-primary shadow-lg shadow-primary/25' : 'text-text/70 hover:text-primary hover:bg-primary/5'
             }`}
@@ -130,7 +130,7 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
             Game
           </a>
           <a
-            href="/json"
+            href="/admin/json"
             className={`px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${
               active === 'JSON' ? 'text-white bg-primary shadow-lg shadow-primary/25' : 'text-text/70 hover:text-primary hover:bg-primary/5'
             }`}
@@ -169,12 +169,12 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
           {links.map((link) => (
             <AdminMobileDropdownItem key={link.name} link={link} active={active} onClose={() => setOpen(false)} />
           ))}
-          <a href="/game" onClick={() => setOpen(false)}
+          <a href="/admin/game" onClick={() => setOpen(false)}
             className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === 'Recycling Game' ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'}`}
           >
             Game
           </a>
-          <a href="/json" onClick={() => setOpen(false)}
+          <a href="/admin/json" onClick={() => setOpen(false)}
             className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === 'JSON' ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'}`}
           >
             JSON
@@ -188,13 +188,13 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
 function AdminMobileDropdownItem({ link, active, onClose }: { link: NavLink; active: string; onClose: () => void }) {
   const [expanded, setExpanded] = useState(false)
   const location = useLocation()
-  const hasActiveChild = link.children?.some((c) => location.pathname === c.to)
+  const hasActiveChild = link.children?.some((c) => location.pathname === `/admin${c.to}`)
 
   if (link.type !== 'dropdown' || !link.children) {
     return (
-      <a key={link.name} href={link.to} onClick={onClose}
+      <a key={link.name} href={`/admin${link.to}`} onClick={onClose}
         className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
-          location.pathname === link.to ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'
+          location.pathname === `/admin${link.to}` ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'
         }`}
       >
         {link.name}
@@ -220,9 +220,9 @@ function AdminMobileDropdownItem({ link, active, onClose }: { link: NavLink; act
           {link.children.map((child) => (
             <a
               key={child.name}
-              href={child.to}
+              href={`/admin${child.to}`}
               onClick={onClose}
-              className={`block py-2 px-4 rounded-lg text-sm transition-all ${location.pathname === child.to ? 'text-primary font-semibold bg-primary/5' : 'text-text/60 hover:text-primary hover:bg-primary/5'}`}
+              className={`block py-2 px-4 rounded-lg text-sm transition-all ${location.pathname === `/admin${child.to}` ? 'text-primary font-semibold bg-primary/5' : 'text-text/60 hover:text-primary hover:bg-primary/5'}`}
             >
               {child.name}
             </a>

@@ -1,0 +1,1986 @@
+import { r as __toESM } from "../_runtime.mjs";
+import { N as require_jsx_runtime, P as require_react, g as useNavigate, h as Link, l as useLocation } from "../_libs/@tanstack/react-router+[...].mjs";
+import { r as shouldReduceMotion, t as Route } from "./routes-ChVHeWHc.mjs";
+import { t as gsapWithCSS } from "../_libs/gsap.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-BND7vgkw.js
+var import_react = /* @__PURE__ */ __toESM(require_react());
+var import_jsx_runtime = require_jsx_runtime();
+function Navbar({ active, links, cta, logo, siteName, socialLinks }) {
+	const [mobileOpen, setMobileOpen] = (0, import_react.useState)(false);
+	const [openDropdown, setOpenDropdown] = (0, import_react.useState)(null);
+	const location = useLocation();
+	const logoRef = (0, import_react.useRef)(null);
+	const glowRef = (0, import_react.useRef)(null);
+	const navRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (logoRef.current) gsapWithCSS.fromTo(logoRef.current, {
+			opacity: 0,
+			y: -20
+		}, {
+			opacity: 1,
+			y: 0,
+			duration: .8,
+			ease: "power3.out"
+		});
+		if (navRef.current) {
+			const linkEls = navRef.current.querySelectorAll(".nav-link");
+			gsapWithCSS.fromTo(linkEls, {
+				opacity: 0,
+				y: -10
+			}, {
+				opacity: 1,
+				y: 0,
+				duration: .5,
+				delay: .1,
+				ease: "power2.out"
+			});
+		}
+		if (glowRef.current) gsapWithCSS.to(glowRef.current, {
+			opacity: [
+				.3,
+				.6,
+				.3
+			],
+			duration: 3,
+			repeat: -1,
+			ease: "sine.inOut"
+		});
+	}, []);
+	const isChildActive = (children) => {
+		if (!children) return false;
+		return children.some((child) => active === child.to || location.pathname === child.to);
+	};
+	const isAnyDropdownActive = (link) => {
+		if (link.type === "dropdown" && link.children) return isChildActive(link.children);
+		return active === link.to || location.pathname === link.to;
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+		ref: navRef,
+		className: "fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-2xl border-b border-primary/5 motion-preset-fade",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				ref: glowRef,
+				className: "absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-30 pointer-events-none"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						to: "/",
+						ref: logoRef,
+						className: "flex items-center gap-2 group shrink-0",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+							src: logo,
+							alt: siteName,
+							className: "h-30 w-auto drop-shadow-glow group-hover:drop-shadow-glow-strong transition-all duration-500"
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "hidden lg:flex items-center gap-1",
+						children: [
+							links.map((link) => link.type === "dropdown" && link.children ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "relative group",
+								onMouseEnter: () => setOpenDropdown(link.name),
+								onMouseLeave: () => setOpenDropdown(null),
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									className: `nav-link relative px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 flex items-center gap-1.5 ${isAnyDropdownActive(link) ? "text-white bg-gradient-to-r from-primary to-primary-deep shadow-lg shadow-primary/30" : "text-text/60 hover:text-primary hover:bg-primary/5"}`,
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "relative z-10",
+											children: link.name
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+											className: `w-3.5 h-3.5 relative z-10 transition-transform duration-200 ${openDropdown === link.name ? "rotate-180" : ""}`,
+											fill: "none",
+											stroke: "currentColor",
+											viewBox: "0 0 24 24",
+											strokeWidth: 2.5,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+												strokeLinecap: "round",
+												strokeLinejoin: "round",
+												d: "M19 9l-7 7-7-7"
+											})
+										}),
+										isAnyDropdownActive(link) && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "absolute inset-0 rounded-full animate-pulse bg-primary/20",
+											style: { animationDuration: "2s" }
+										})
+									]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: `absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${openDropdown === link.name ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-1"}`,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "bg-white/90 backdrop-blur-xl rounded-2xl border border-primary/10 shadow-2xl shadow-primary/10 py-2 min-w-[200px] overflow-hidden",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20" }), link.children.map((child, ci) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+											to: child.to,
+											className: `block px-5 py-2.5 font-sans text-sm transition-all duration-200 ${active === child.to ? "text-primary font-semibold bg-primary/5" : "text-text/70 hover:text-primary hover:bg-primary/5"}`,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+												className: "flex items-center gap-2",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `w-1 h-1 rounded-full transition-all duration-200 ${active === child.to ? "bg-primary scale-150" : "bg-transparent"}` }), child.name]
+											})
+										}, child.name))]
+									})
+								})]
+							}, link.name) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+								to: link.to,
+								className: `nav-link relative px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${active === link.to ? "text-white bg-gradient-to-r from-primary to-primary-deep shadow-lg shadow-primary/30" : "text-text/60 hover:text-primary hover:bg-primary/5"}`,
+								children: [active === link.to && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "absolute inset-0 rounded-full animate-pulse bg-primary/20",
+									style: { animationDuration: "2s" }
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "relative z-10",
+									children: link.name
+								})]
+							}, link.name)),
+							socialLinks && socialLinks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "flex items-center gap-1.5 mr-2 pl-3 border-l border-primary/10",
+								children: socialLinks.map((link) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+									href: link.url,
+									target: "_blank",
+									rel: "noopener noreferrer",
+									className: "nav-link w-8 h-8 rounded-full flex items-center justify-center text-text/40 hover:text-primary hover:bg-primary/5 transition-all duration-200",
+									"aria-label": link.label,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SocialIcon, { platform: link.platform })
+								}, link.platform))
+							}),
+							cta && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+								to: cta.to,
+								className: "ml-3 nav-link relative font-sans font-semibold text-sm px-5 py-2.5 rounded-full bg-accent text-white hover:brightness-110 shadow-lg shadow-accent/25 hover:shadow-accent/40 transition-all duration-300",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+									className: "relative z-10 flex items-center gap-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 2,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+										})
+									}), cta.label]
+								})
+							})
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						onClick: () => setMobileOpen(!mobileOpen),
+						className: "lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-text hover:bg-primary/5 transition-colors",
+						"aria-label": "Toggle menu",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "w-5 h-4 relative flex flex-col justify-between",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `block h-0.5 w-full bg-current rounded-full transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[7px]" : ""}` }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `block h-0.5 w-full bg-current rounded-full transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}` }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `block h-0.5 w-full bg-current rounded-full transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[7px]" : ""}` })
+							]
+						})
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: `lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "bg-background/95 backdrop-blur-2xl border-t border-primary/10 px-4 pb-4 pt-2 space-y-1",
+					children: [
+						links.map((link) => link.type === "dropdown" && link.children ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MobileDropdownItem, {
+							link,
+							active,
+							onClose: () => setMobileOpen(false)
+						}, link.name) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+							to: link.to,
+							onClick: () => setMobileOpen(false),
+							className: `block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === link.to ? "text-white bg-gradient-to-r from-primary to-primary-deep shadow-lg shadow-primary/20" : "text-text/70 hover:text-primary hover:bg-primary/5"}`,
+							children: link.name
+						}, link.name)),
+						cta && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+							to: cta.to,
+							onClick: () => setMobileOpen(false),
+							className: "block py-2.5 px-4 rounded-xl text-sm font-semibold text-center text-white bg-accent shadow-lg shadow-accent/25 hover:brightness-110 transition-all duration-300",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: "flex items-center justify-center gap-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+									className: "w-4 h-4",
+									fill: "none",
+									stroke: "currentColor",
+									viewBox: "0 0 24 24",
+									strokeWidth: 2,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+										strokeLinecap: "round",
+										strokeLinejoin: "round",
+										d: "M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+									})
+								}), cta.label]
+							})
+						}),
+						socialLinks && socialLinks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "flex items-center justify-center gap-3 pt-3 mt-3 border-t border-primary/10",
+							children: socialLinks.map((link) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+								href: link.url,
+								target: "_blank",
+								rel: "noopener noreferrer",
+								className: "w-9 h-9 rounded-full flex items-center justify-center text-text/40 hover:text-primary hover:bg-primary/5 transition-all duration-200",
+								"aria-label": link.label,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SocialIcon, { platform: link.platform })
+							}, link.platform))
+						})
+					]
+				})
+			})
+		]
+	});
+}
+function SocialIcon({ platform }) {
+	const paths = {
+		linkedin: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z",
+		instagram: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z",
+		facebook: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
+		twitter: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+		youtube: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+		className: "w-4 h-4",
+		viewBox: "0 0 24 24",
+		fill: "currentColor",
+		xmlns: "http://www.w3.org/2000/svg",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: paths[platform] || paths.linkedin })
+	});
+}
+function MobileDropdownItem({ link, active, onClose }) {
+	const [expanded, setExpanded] = (0, import_react.useState)(false);
+	const location = useLocation();
+	const hasActiveChild = link.children?.some((c) => active === c.to || location.pathname === c.to);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		onClick: () => setExpanded(!expanded),
+		className: `w-full flex items-center justify-between py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${hasActiveChild ? "text-primary bg-primary/5" : "text-text/70 hover:text-primary hover:bg-primary/5"}`,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: link.name }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+			className: `w-4 h-4 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`,
+			fill: "none",
+			stroke: "currentColor",
+			viewBox: "0 0 24 24",
+			strokeWidth: 2.5,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+				strokeLinecap: "round",
+				strokeLinejoin: "round",
+				d: "M19 9l-7 7-7-7"
+			})
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: `overflow-hidden transition-all duration-200 ${expanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: "ml-4 pl-3 border-l-2 border-primary/10 space-y-0.5 py-1",
+			children: link.children?.map((child) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+				to: child.to,
+				onClick: onClose,
+				className: `block py-2 px-4 rounded-lg text-sm transition-all ${active === child.to ? "text-primary font-semibold bg-primary/5" : "text-text/60 hover:text-primary hover:bg-primary/5"}`,
+				children: child.name
+			}, child.name))
+		})
+	})] });
+}
+function getCsrfToken() {
+	const match = document.cookie.match(/csrftoken=([^;]+)/);
+	return match ? match[1] : "";
+}
+function RecyclingGame({ items }) {
+	const [round, setRound] = (0, import_react.useState)(0);
+	const [correct, setCorrect] = (0, import_react.useState)(0);
+	const [startTime, setStartTime] = (0, import_react.useState)(0);
+	const [elapsed, setElapsed] = (0, import_react.useState)(0);
+	const [current, setCurrent] = (0, import_react.useState)(null);
+	const [name, setName] = (0, import_react.useState)("");
+	const [submitted, setSubmitted] = (0, import_react.useState)(false);
+	const [animKey, setAnimKey] = (0, import_react.useState)(0);
+	const intervalRef = (0, import_react.useRef)(null);
+	const pickItem = (0, import_react.useCallback)(() => {
+		if (items.length === 0) return null;
+		return items[Math.floor(Math.random() * items.length)];
+	}, [items]);
+	const startGame = (0, import_react.useCallback)(() => {
+		setCurrent(pickItem());
+		setRound(1);
+		setCorrect(0);
+		const now = Date.now();
+		setStartTime(now);
+		setElapsed(0);
+		setSubmitted(false);
+		setName("");
+		setAnimKey((k) => k + 1);
+		if (intervalRef.current) clearInterval(intervalRef.current);
+		intervalRef.current = setInterval(() => setElapsed((Date.now() - now) / 1e3), 100);
+	}, [items, pickItem]);
+	(0, import_react.useEffect)(() => {
+		return () => {
+			if (intervalRef.current) clearInterval(intervalRef.current);
+		};
+	}, []);
+	const handleAnswer = (recyclable) => {
+		const newCorrect = current && current.recyclable === recyclable ? correct + 1 : correct;
+		if (newCorrect === 10) {
+			if (intervalRef.current) clearInterval(intervalRef.current);
+			setCurrent(null);
+			setCorrect(newCorrect);
+			return;
+		}
+		setCurrent(pickItem());
+		setRound((r) => r + 1);
+		setCorrect(newCorrect);
+		setAnimKey((k) => k + 1);
+	};
+	const handleSubmit = async () => {
+		if (!name.trim()) return;
+		try {
+			await fetch("http://localhost:8001/api/leaderboard", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"X-CSRFToken": getCsrfToken()
+				},
+				credentials: "include",
+				body: JSON.stringify({
+					name: name.trim(),
+					time: elapsed
+				})
+			});
+		} catch {}
+		setSubmitted(true);
+	};
+	if (round === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "text-center motion-preset-pop",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-4",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+					className: "w-8 h-8 text-primary",
+					fill: "none",
+					stroke: "currentColor",
+					viewBox: "0 0 24 24",
+					strokeWidth: 1.5,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+						strokeLinecap: "round",
+						strokeLinejoin: "round",
+						d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+					})
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+				className: "font-title text-2xl font-bold mb-2",
+				children: "Recycling Game"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				className: "text-text/60 mb-6 text-sm",
+				children: "Sort 10 items as Recyclable or Not. Beat the clock!"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				onClick: startGame,
+				className: "bg-gradient-to-r from-primary to-primary/80 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:brightness-110 transition-all duration-300 motion-preset-pulse motion-duration-2000 motion-loop-infinite",
+				children: "Start Game"
+			})
+		]
+	});
+	if (correct === 10) {
+		const timeStr = elapsed.toFixed(2);
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "text-center motion-preset-pop",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "w-16 h-16 rounded-2xl bg-gradient-to-br from-success/20 to-primary/20 flex items-center justify-center mx-auto mb-4 motion-preset-wobble motion-duration-1000",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+						className: "w-8 h-8 text-success",
+						fill: "none",
+						stroke: "currentColor",
+						viewBox: "0 0 24 24",
+						strokeWidth: 1.5,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+							strokeLinecap: "round",
+							strokeLinejoin: "round",
+							d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+						})
+					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+					className: "font-title text-2xl font-bold mb-1",
+					children: "All Done!"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+					className: "text-lg font-bold text-primary mb-1",
+					children: [correct, " / 10 correct"]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+					className: "text-4xl font-title font-bold text-text mb-6 motion-preset-pulse motion-duration-2000",
+					children: [timeStr, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-lg text-text/40",
+						children: "s"
+					})]
+				}),
+				!submitted && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "space-y-3 max-w-xs mx-auto",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "text",
+						value: name,
+						onChange: (e) => setName(e.target.value),
+						placeholder: "Enter your name",
+						className: "w-full px-4 py-3 rounded-xl border border-primary/20 bg-white/60 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-center",
+						maxLength: 20
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						onClick: handleSubmit,
+						disabled: !name.trim(),
+						className: "w-full bg-gradient-to-r from-primary to-primary/80 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed",
+						children: "Submit Score"
+					})]
+				}),
+				submitted && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center justify-center gap-2 text-success font-medium py-3",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+						className: "w-5 h-5",
+						fill: "none",
+						stroke: "currentColor",
+						viewBox: "0 0 24 24",
+						strokeWidth: 2,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+							strokeLinecap: "round",
+							strokeLinejoin: "round",
+							d: "M5 13l4 4L19 7"
+						})
+					}), "Score submitted!"]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					onClick: startGame,
+					className: "mt-6 text-primary font-medium hover:text-primary/80 transition-colors underline underline-offset-4 decoration-primary/30 hover:decoration-primary",
+					children: "Play Again"
+				})
+			]
+		});
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "text-center",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "w-full h-2 bg-primary/10 rounded-full mb-6 overflow-hidden",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500 ease-out",
+					style: { width: `${correct / 10 * 100}%` }
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "flex justify-between items-center mb-6 max-w-sm mx-auto",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						className: "flex items-center gap-1.5 text-sm font-medium text-text/60",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-4 h-4 text-primary",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 2,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+								})
+							}),
+							round,
+							"/10"
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						className: "text-2xl font-mono font-bold tabular-nums motion-preset-pulse motion-duration-2000 motion-loop-infinite",
+						children: [elapsed.toFixed(2), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "text-sm text-text/40",
+							children: "s"
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						className: "flex items-center gap-1.5 text-sm font-medium text-success",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+							className: "w-4 h-4",
+							fill: "none",
+							stroke: "currentColor",
+							viewBox: "0 0 24 24",
+							strokeWidth: 2,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+								strokeLinecap: "round",
+								strokeLinejoin: "round",
+								d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+							})
+						}), correct]
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "mb-8 motion-preset-pop motion-duration-300",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					className: "text-sm text-text/50 mb-3",
+					children: "Is this recyclable?"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "inline-block bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl px-8 py-6 border border-primary/10",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "font-title text-3xl font-bold",
+						children: current?.name
+					})
+				})]
+			}, animKey),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "flex gap-4 justify-center",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					onClick: () => handleAnswer(true),
+					className: "flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:brightness-110 hover:-translate-y-0.5 transition-all duration-300",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+						className: "w-5 h-5",
+						fill: "none",
+						stroke: "currentColor",
+						viewBox: "0 0 24 24",
+						strokeWidth: 2.5,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+							strokeLinecap: "round",
+							strokeLinejoin: "round",
+							d: "M5 13l4 4L19 7"
+						})
+					}), "Recyclable"]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					onClick: () => handleAnswer(false),
+					className: "flex items-center gap-2 bg-gradient-to-r from-error to-error/80 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-error/25 hover:shadow-error/40 hover:brightness-110 hover:-translate-y-0.5 transition-all duration-300",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+						className: "w-5 h-5",
+						fill: "none",
+						stroke: "currentColor",
+						viewBox: "0 0 24 24",
+						strokeWidth: 2.5,
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+							strokeLinecap: "round",
+							strokeLinejoin: "round",
+							d: "M6 18L18 6M6 6l12 12"
+						})
+					}), "Not Recyclable"]
+				})]
+			}, animKey + 1)
+		]
+	});
+}
+async function fetchLeaderboard() {
+	try {
+		const res = await fetch("http://localhost:8001/api/leaderboard");
+		if (!res.ok) return [];
+		return (await res.json()).map((e) => ({
+			name: e.name,
+			time: e.time
+		}));
+	} catch {
+		return [];
+	}
+}
+function Leaderboard() {
+	const [scores, setScores] = (0, import_react.useState)([]);
+	const [loading, setLoading] = (0, import_react.useState)(true);
+	(0, import_react.useEffect)(() => {
+		fetchLeaderboard().then((s) => {
+			setScores(s);
+			setLoading(false);
+		});
+	}, []);
+	const sorted = [...scores].sort((a, b) => a.time - b.time).slice(0, 10);
+	const medals = [
+		"text-warning",
+		"text-text/40",
+		"text-accent"
+	];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "mt-8 pt-6 border-t border-primary/10",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h3", {
+			className: "font-title text-xl font-bold mb-4 flex items-center gap-2",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+				className: "w-5 h-5 text-primary",
+				fill: "none",
+				stroke: "currentColor",
+				viewBox: "0 0 24 24",
+				strokeWidth: 1.5,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+					strokeLinecap: "round",
+					strokeLinejoin: "round",
+					d: "M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M18.75 4.236c.982.143 1.954.317 2.916.52A6.003 6.003 0 0016.27 9.728M18.75 4.236V4.5c0 2.108-.966 3.99-2.48 5.228m0 0a6.023 6.023 0 01-2.77.896m0 0a6.023 6.023 0 01-2.77-.896"
+				})
+			}), "Leaderboard"]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
+			className: "w-full text-left",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
+				className: "text-xs text-text/50 uppercase tracking-wider border-b border-primary/10",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
+						className: "pb-2 pr-4 w-10",
+						children: "#"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
+						className: "pb-2",
+						children: "Name"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
+						className: "pb-2 text-right",
+						children: "Time"
+					})
+				]
+			}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: sorted.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
+				className: "border-b border-primary/5 last:border-0 group hover:bg-primary/5 transition-colors",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
+						className: "py-2.5 pr-4",
+						children: i < 3 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+							className: `w-5 h-5 ${medals[i]}`,
+							fill: "currentColor",
+							viewBox: "0 0 20 20",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" })
+						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "text-text/40 text-sm font-mono",
+							children: i + 1
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
+						className: "py-2.5 font-medium text-sm",
+						children: s.name
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", {
+						className: "py-2.5 text-right font-mono text-sm text-text/70",
+						children: [s.time.toFixed(2), "s"]
+					})
+				]
+			}, i)) })]
+		})]
+	});
+}
+function formatValue(value) {
+	if (value >= 1e3) return (value / 1e3).toFixed(1);
+	if (value >= 1) return value.toFixed(1);
+	if (value >= .01) return value.toFixed(2);
+	if (value > 0) return value.toFixed(3);
+	return "0";
+}
+function formatCompact(value) {
+	if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
+	if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+	return value.toLocaleString();
+}
+function ImpactCalculator({ title = "E-Waste Impact Calculator", description = "Select the devices you've recycled and see the environmental impact of your contribution.", items = [] }) {
+	const navigate = useNavigate();
+	const [quantities, setQuantities] = (0, import_react.useState)(/* @__PURE__ */ new Map());
+	const getQuantity = (index) => quantities.get(index) ?? 0;
+	const increment = (index) => {
+		setQuantities((prev) => {
+			const next = new Map(prev);
+			next.set(index, (next.get(index) ?? 0) + 1);
+			return next;
+		});
+	};
+	const decrement = (index) => {
+		setQuantities((prev) => {
+			const current = prev.get(index) ?? 0;
+			if (current <= 1) {
+				const next = new Map(prev);
+				next.delete(index);
+				return next;
+			}
+			const next = new Map(prev);
+			next.set(index, current - 1);
+			return next;
+		});
+	};
+	const clearAll = () => setQuantities(/* @__PURE__ */ new Map());
+	const hasSelection = quantities.size > 0;
+	let totalCO2 = 0;
+	const selectedEntries = [];
+	quantities.forEach((qty, index) => {
+		const item = items[index];
+		if (item) {
+			totalCO2 += item.co2 * qty;
+			selectedEntries.push({
+				name: item.name,
+				quantity: qty
+			});
+		}
+	});
+	const totalDevices = Array.from(quantities.values()).reduce((sum, q) => sum + q, 0);
+	const trees = Math.round(totalCO2 / 20);
+	const carMiles = Math.round(totalCO2 / .4);
+	const homesEnergy = Math.round(totalCO2 / 15);
+	const handleRequestQuote = () => {
+		const entries = selectedEntries.map((e) => ({
+			name: e.name,
+			quantity: e.quantity
+		}));
+		navigate({
+			to: "/contact",
+			search: {
+				tab: "quote",
+				materials: encodeURIComponent(JSON.stringify(entries))
+			}
+		});
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "relative",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -top-24 -left-24 w-80 h-80 bg-secondary/8 rounded-full blur-3xl -z-10 motion-preset-float motion-duration-4000" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -bottom-24 -right-24 w-96 h-96 bg-accent/8 rounded-full blur-3xl -z-10 motion-preset-float motion-duration-5000 motion-delay-1000" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10 motion-preset-pulse motion-duration-6000" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "text-center mb-10 motion-preset-slide-up motion-duration-700",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-4",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-primary motion-preset-pulse" }), "Calculate Your Impact"]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+						className: "font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4",
+						children: title
+					}),
+					description && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "text-base sm:text-lg text-text/60 max-w-2xl mx-auto font-light",
+						children: description
+					})
+				]
+			}),
+			items.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-12 text-center motion-preset-pop",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					className: "text-text/40 font-light",
+					children: "No devices available to calculate impact."
+				})
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 mb-10",
+				children: items.map((item, index) => {
+					const qty = getQuantity(index);
+					const isSelected = qty > 0;
+					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						onClick: () => !isSelected && increment(index),
+						className: `relative group bg-white/40 backdrop-blur-sm rounded-2xl border p-4 sm:p-5 text-center transition-all duration-300 card-hover motion-preset-slide-up motion-duration-500 ${isSelected ? "border-primary/30 shadow-lg shadow-primary/10 bg-white/60 ring-2 ring-primary/20" : "border-primary/10 hover:border-primary/20 hover:bg-white/60 hover:shadow-md"}`,
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: `text-3xl sm:text-4xl mb-2.5 transition-all duration-300 ${isSelected ? "scale-110" : "group-hover:scale-105"}`,
+								"aria-hidden": "true",
+								children: item.image
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "font-title text-sm sm:text-base font-bold text-text mb-2 leading-tight",
+								children: item.name
+							}),
+							!isSelected ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "inline-block text-xs font-semibold px-2.5 py-1 rounded-full transition-all duration-300 bg-accent/10 text-accent group-hover:bg-accent/15",
+								children: "+ Add"
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center justify-center gap-2",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										onClick: (e) => {
+											e.stopPropagation();
+											decrement(index);
+										},
+										className: "w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-sm font-bold cursor-pointer hover:bg-primary/25 transition-colors select-none",
+										children: "−"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-sm font-bold text-primary min-w-[1.5ch] text-center",
+										children: qty
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										onClick: (e) => {
+											e.stopPropagation();
+											increment(index);
+										},
+										className: "w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-sm font-bold cursor-pointer hover:bg-primary/25 transition-colors select-none",
+										children: "+"
+									})
+								]
+							}),
+							isSelected && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "absolute top-2.5 right-2.5 w-5 h-5 bg-primary rounded-full flex items-center justify-center shadow-sm motion-preset-pop motion-duration-200",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+									className: "w-3 h-3 text-white",
+									fill: "none",
+									stroke: "currentColor",
+									viewBox: "0 0 24 24",
+									strokeWidth: 3,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+										strokeLinecap: "round",
+										strokeLinejoin: "round",
+										d: "M5 13l4 4L19 7"
+									})
+								})
+							})
+						]
+					}, `${item.name}-${index}`);
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: `bg-white/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl border p-6 sm:p-8 transition-all duration-500 motion-preset-slide-up motion-duration-700 ${hasSelection ? "border-primary/20 shadow-xl shadow-primary/5" : "border-primary/10"}`,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center justify-between mb-6",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h3", {
+						className: "font-title text-xl sm:text-2xl font-bold text-text flex items-center gap-3",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "w-9 h-9 rounded-xl bg-gradient-to-br from-primary/15 to-secondary/15 flex items-center justify-center ring-1 ring-primary/10",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-4 h-4 text-primary",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 1.5,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+								})
+							})
+						}), "Your Total Impact"]
+					}), hasSelection && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center gap-3",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: "text-xs sm:text-sm text-text/40 font-medium hidden sm:block",
+							children: [
+								totalDevices,
+								" ",
+								totalDevices === 1 ? "device" : "devices"
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							onClick: clearAll,
+							className: "text-xs font-semibold px-3 py-1.5 rounded-full bg-text/5 text-text/40 hover:bg-error/10 hover:text-error transition-all duration-300",
+							children: "Clear all"
+						})]
+					})]
+				}), !hasSelection ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "text-center py-10 sm:py-14",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "w-16 h-16 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center mx-auto mb-4",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+							className: "w-7 h-7 text-text/30",
+							fill: "none",
+							stroke: "currentColor",
+							viewBox: "0 0 24 24",
+							strokeWidth: 1.5,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+								strokeLinecap: "round",
+								strokeLinejoin: "round",
+								d: "M12 6v6m0 0v6m0-6h6m-6 0H6"
+							})
+						})
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "text-text/40 font-light text-sm sm:text-base",
+						children: "Select devices above to calculate your environmental impact"
+					})]
+				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "bg-success/5 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-success/10 transition-all duration-500 hover:shadow-lg hover:scale-[1.02] motion-preset-slide-up",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-2.5 mb-3",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "w-9 h-9 rounded-xl bg-success/10 flex items-center justify-center ring-1 ring-success/20 transition-all duration-300",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4 text-success",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 1.5,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+										})
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-[11px] font-semibold text-text/40 uppercase tracking-[0.08em]",
+									children: "CO₂ Prevented"
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-baseline gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-title text-2xl sm:text-3xl font-bold text-success transition-all duration-300",
+									children: formatValue(totalCO2)
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs text-text/30 font-medium",
+									children: "kg"
+								})]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "bg-primary/5 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-primary/10 transition-all duration-500 hover:shadow-lg hover:scale-[1.02] motion-preset-slide-up",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-2.5 mb-3",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 transition-all duration-300",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4 text-primary",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 1.5,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M12 6v6m0 0v6m0-6h6m-6 0H6"
+										})
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-[11px] font-semibold text-text/40 uppercase tracking-[0.08em]",
+									children: "Trees Planted"
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-baseline gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-title text-2xl sm:text-3xl font-bold text-primary transition-all duration-300",
+									children: formatCompact(trees)
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs text-text/30 font-medium",
+									children: "trees/year"
+								})]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "bg-secondary/5 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-secondary/10 transition-all duration-500 hover:shadow-lg hover:scale-[1.02] motion-preset-slide-up",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-2.5 mb-3",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "w-9 h-9 rounded-xl bg-secondary/10 flex items-center justify-center ring-1 ring-secondary/20 transition-all duration-300",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4 text-secondary",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 1.5,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-9.86a4.5 4.5 0 10-6.364 6.364L8.757 4.93"
+										})
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-[11px] font-semibold text-text/40 uppercase tracking-[0.08em]",
+									children: "Car Miles Avoided"
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-baseline gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-title text-2xl sm:text-3xl font-bold text-secondary transition-all duration-300",
+									children: formatCompact(carMiles)
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs text-text/30 font-medium",
+									children: "miles"
+								})]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "bg-accent/5 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-accent/10 transition-all duration-500 hover:shadow-lg hover:scale-[1.02] motion-preset-slide-up",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-2.5 mb-3",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center ring-1 ring-accent/20 transition-all duration-300",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4 text-accent",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 1.5,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+										})
+									})
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-[11px] font-semibold text-text/40 uppercase tracking-[0.08em]",
+									children: "Homes' Energy"
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-baseline gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-title text-2xl sm:text-3xl font-bold text-accent transition-all duration-300",
+									children: formatCompact(homesEnergy)
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs text-text/30 font-medium",
+									children: "homes/day"
+								})]
+							})]
+						})
+					]
+				}), totalCO2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "mt-4 flex flex-col gap-3",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center justify-center gap-2 text-xs sm:text-sm text-text/50 font-light motion-preset-slide-up motion-duration-500",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-4 h-4 text-success shrink-0",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 1.5,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+								})
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+								"That's ",
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("strong", {
+									className: "text-success font-semibold",
+									children: [formatValue(totalCO2), " kg"]
+								}),
+								" of CO",
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("sub", {
+									className: "text-[0.6em]",
+									children: "2"
+								}),
+								" emissions prevented."
+							] })]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "bg-white/30 rounded-xl p-4 sm:p-5 border border-primary/5 transition-all duration-300",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "grid grid-cols-1 sm:grid-cols-3 gap-4 text-center",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "p-3 rounded-xl bg-primary/5 border border-primary/10",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "block font-title text-xl sm:text-2xl font-bold text-primary",
+											children: formatCompact(trees)
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+											className: "text-xs text-text/40 font-medium",
+											children: [
+												"trees planted",
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
+												"this year"
+											]
+										})]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "p-3 rounded-xl bg-secondary/5 border border-secondary/10",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "block font-title text-xl sm:text-2xl font-bold text-secondary",
+											children: formatCompact(carMiles)
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+											className: "text-xs text-text/40 font-medium",
+											children: [
+												"car miles",
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
+												"avoided"
+											]
+										})]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "p-3 rounded-xl bg-accent/5 border border-accent/10",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "block font-title text-xl sm:text-2xl font-bold text-accent",
+											children: formatCompact(homesEnergy)
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+											className: "text-xs text-text/40 font-medium",
+											children: [
+												"homes' energy",
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
+												"for a day"
+											]
+										})]
+									})
+								]
+							})
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "flex justify-center mt-4 motion-preset-slide-up motion-duration-500",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: handleRequestQuote,
+								className: "group relative font-sans font-semibold px-8 py-3.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white hover:brightness-110 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-500",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+									className: "relative z-10 flex items-center gap-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-5 h-5",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 2,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+										})
+									}), "Request a Quote"]
+								})
+							})
+						})
+					]
+				})] })]
+			})
+		]
+	});
+}
+function AnimatedHeading({ text }) {
+	const ref = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (shouldReduceMotion()) return;
+		const el = ref.current;
+		if (!el) return;
+		const words = el.querySelectorAll(".word");
+		gsapWithCSS.fromTo(words, {
+			opacity: 0,
+			y: 30,
+			rotateX: -40
+		}, {
+			opacity: 1,
+			y: 0,
+			rotateX: 0,
+			duration: .7,
+			stagger: .04,
+			ease: "back.out(1.4)"
+		});
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+		ref,
+		className: "font-title text-5xl sm:text-7xl lg:text-8xl font-bold text-text mb-6 leading-[1.1]",
+		children: text.split(" ").map((word, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: "word inline-block mr-[0.3rem]",
+			children: word
+		}, i))
+	});
+}
+function Home() {
+	const content = Route.useLoaderData();
+	const { tagline, heroTitle, heroSubtitle, matrixCards, trustStats, authorization, audience, impactCalculator, corporateDashboard, whyTerionix } = content.home;
+	const gameRef = (0, import_react.useRef)(null);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "font-sans text-text",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navbar, {
+			active: "/",
+			links: content.navbar.links,
+			cta: content.navbar.cta,
+			logo: content.site.logo,
+			siteName: content.site.name,
+			socialLinks: content.social?.links || []
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {
+			className: "relative overflow-hidden",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-end gap-1",
+					children: audience.segments.map((segment, i) => {
+						const sideStyles = [
+							"bg-primary/90 hover:bg-primary text-white border-l-2 border-primary/50",
+							"bg-secondary/90 hover:bg-secondary text-white border-l-2 border-secondary/50",
+							"bg-accent/90 hover:bg-accent text-white border-l-2 border-accent/50"
+						];
+						const sideIcons = [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-5 h-5 shrink-0",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 1.5,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
+								})
+							}, "b2b"),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-5 h-5 shrink-0",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 1.5,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+								})
+							}, "acad"),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-5 h-5 shrink-0",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								strokeWidth: 1.5,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+								})
+							}, "indiv")
+						];
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+							to: segment.cta.href,
+							className: `group relative flex items-center gap-2.5 pl-3 pr-4 py-3 rounded-l-xl transition-all duration-300 text-sm font-semibold w-12 hover:w-60 overflow-hidden ${sideStyles[i]}`,
+							title: segment.title,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: "flex items-center gap-2.5 whitespace-nowrap",
+								children: [sideIcons[i], /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+									children: segment.cta.label
+								})]
+							})
+						}, segment.id);
+					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "relative min-h-screen flex items-center justify-center px-4 pt-16",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "absolute inset-0 -z-10",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "aurora-bg",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											className: "aurora-wave bg-primary/10",
+											style: {
+												top: "-50%",
+												left: "-30%",
+												animationDelay: "0s"
+											}
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											className: "aurora-wave bg-secondary/8",
+											style: {
+												top: "-30%",
+												right: "-20%",
+												animationDelay: "-4s"
+											}
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											className: "aurora-wave bg-accent/6",
+											style: {
+												bottom: "-40%",
+												left: "10%",
+												animationDelay: "-8s"
+											}
+										})
+									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-20 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl motion-preset-float motion-duration-4000" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-40 left-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl motion-preset-float motion-duration-5000 motion-delay-1000" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl motion-preset-pulse motion-duration-6000" })
+							]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "max-w-5xl mx-auto text-center relative",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-8 motion-preset-slide-up motion-duration-700",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-primary motion-preset-pulse" }), tagline]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnimatedHeading, { text: heroTitle }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-lg sm:text-xl text-text/60 max-w-2xl mx-auto mb-10 motion-preset-slide-up motion-duration-700 motion-delay-200 font-light",
+									children: heroSubtitle
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "mt-10 motion-preset-slide-up motion-duration-700 motion-delay-300",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+											className: "w-4 h-4",
+											fill: "none",
+											stroke: "currentColor",
+											viewBox: "0 0 24 24",
+											strokeWidth: 2,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+												strokeLinecap: "round",
+												strokeLinejoin: "round",
+												d: "M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+											})
+										}), audience.heading]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "grid md:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto text-left",
+										children: audience.segments.map((segment, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "group bg-white/50 backdrop-blur-sm rounded-2xl border border-primary/10 p-5 hover:border-primary/30 hover:bg-white/70 hover:shadow-xl transition-all duration-500 card-hover flex flex-col",
+											children: [
+												/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: `w-11 h-11 rounded-2xl flex items-center justify-center mb-3.5 transition-all duration-500
+                      ${i === 0 ? "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white" : ""}
+                      ${i === 1 ? "bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white" : ""}
+                      ${i === 2 ? "bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white" : ""}
+                    `,
+													children: [
+														segment.icon === "building" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+															className: "w-6 h-6",
+															fill: "none",
+															stroke: "currentColor",
+															viewBox: "0 0 24 24",
+															strokeWidth: 1.5,
+															children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+																strokeLinecap: "round",
+																strokeLinejoin: "round",
+																d: "M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
+															})
+														}),
+														segment.icon === "academic" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+															className: "w-6 h-6",
+															fill: "none",
+															stroke: "currentColor",
+															viewBox: "0 0 24 24",
+															strokeWidth: 1.5,
+															children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+																strokeLinecap: "round",
+																strokeLinejoin: "round",
+																d: "M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+															})
+														}),
+														segment.icon === "user" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+															className: "w-6 h-6",
+															fill: "none",
+															stroke: "currentColor",
+															viewBox: "0 0 24 24",
+															strokeWidth: 1.5,
+															children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+																strokeLinecap: "round",
+																strokeLinejoin: "round",
+																d: "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+															})
+														})
+													]
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+													className: `font-title text-base font-bold text-text mb-2 transition-colors
+                      ${i === 0 ? "group-hover:text-primary" : ""}
+                      ${i === 1 ? "group-hover:text-secondary" : ""}
+                      ${i === 2 ? "group-hover:text-accent" : ""}
+                    `,
+													children: segment.title
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+													className: "text-text/60 text-sm leading-relaxed mb-4 flex-grow",
+													children: segment.description
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+													to: segment.cta.href,
+													className: `inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-500 w-fit
+                        ${i === 0 ? "bg-primary/10 text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary" : ""}
+                        ${i === 1 ? "bg-secondary/10 text-secondary hover:bg-secondary hover:text-white border border-secondary/20 hover:border-secondary" : ""}
+                        ${i === 2 ? "bg-accent/10 text-accent hover:bg-accent hover:text-white border border-accent/20 hover:border-accent" : ""}
+                      `,
+													children: [segment.cta.label, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+														className: "w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1",
+														fill: "none",
+														stroke: "currentColor",
+														viewBox: "0 0 24 24",
+														strokeWidth: 2,
+														children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+														})
+													})]
+												})
+											]
+										}, segment.id))
+									})]
+								})
+							]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "absolute bottom-8 left-1/2 -translate-x-1/2 motion-preset-bounce motion-duration-2000 motion-loop-infinite",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+								className: "w-6 h-6 text-text/20",
+								fill: "none",
+								stroke: "currentColor",
+								viewBox: "0 0 24 24",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									strokeWidth: 2,
+									d: "M19 14l-7 7m0 0l-7-7m7 7V3"
+								})
+							})
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "px-4 py-20 relative",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 section-divider" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "max-w-5xl mx-auto",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "text-center mb-16 motion-preset-slide-up",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-6",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 2,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+										})
+									}), "Verified & Certified"]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+									className: "font-title text-2xl sm:text-3xl font-bold text-text mb-4",
+									children: authorization.title
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-text/60 max-w-3xl mx-auto leading-relaxed",
+									children: authorization.description
+								})
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "grid grid-cols-2 lg:grid-cols-4 gap-4 motion-preset-slide-up motion-delay-200",
+							children: trustStats.map((stat, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-6 text-center hover:border-primary/20 hover:bg-white/60 transition-all duration-300 card-hover",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "font-title text-3xl sm:text-4xl font-bold text-gradient-green mb-1",
+										children: stat.value
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "text-xs text-text/40 font-medium uppercase tracking-wider",
+										children: stat.unit
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "text-sm text-text/60 mt-1",
+										children: stat.label
+									})
+								]
+							}, i))
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "px-4 py-24 relative",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "max-w-6xl mx-auto motion-preset-slide-up",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-center mb-16",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-4",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+											className: "w-4 h-4",
+											fill: "none",
+											stroke: "currentColor",
+											viewBox: "0 0 24 24",
+											strokeWidth: 2,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+												strokeLinecap: "round",
+												strokeLinejoin: "round",
+												d: "M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											})
+										}), "Corporate Portal"]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+										className: "font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4",
+										children: corporateDashboard.title
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-text/60 max-w-2xl mx-auto text-lg",
+										children: corporateDashboard.subtitle
+									})
+								]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "grid md:grid-cols-2 lg:grid-cols-4 gap-6",
+								children: corporateDashboard.features.map((feature, i) => {
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "group bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-6 hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover text-center",
+										style: { animationDelay: `${i * 100}ms` },
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: `w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 transition-all duration-500 ${[
+													"bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white border-primary/20",
+													"bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white border-secondary/20",
+													"bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white border-accent/20",
+													"bg-primary/10 text-primary group-hover:bg-primary-deep group-hover:text-white border-primary/20"
+												][i]}`,
+												children: [
+													feature.icon === "calendar" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+														className: "w-7 h-7",
+														fill: "none",
+														stroke: "currentColor",
+														viewBox: "0 0 24 24",
+														strokeWidth: 1.5,
+														children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+														})
+													}),
+													feature.icon === "tracking" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+														className: "w-7 h-7",
+														fill: "none",
+														stroke: "currentColor",
+														viewBox: "0 0 24 24",
+														strokeWidth: 1.5,
+														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+														}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+														})]
+													}),
+													feature.icon === "certificate" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+														className: "w-7 h-7",
+														fill: "none",
+														stroke: "currentColor",
+														viewBox: "0 0 24 24",
+														strokeWidth: 1.5,
+														children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+														})
+													}),
+													feature.icon === "impact" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+														className: "w-7 h-7",
+														fill: "none",
+														stroke: "currentColor",
+														viewBox: "0 0 24 24",
+														strokeWidth: 1.5,
+														children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+															strokeLinecap: "round",
+															strokeLinejoin: "round",
+															d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+														})
+													})
+												]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+												className: "font-title text-lg font-bold text-text mb-3 group-hover:text-primary transition-colors",
+												children: feature.title
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+												className: "text-text/60 text-sm leading-relaxed",
+												children: feature.description
+											})
+										]
+									}, i);
+								})
+							})]
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "px-4 py-24 relative",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "max-w-6xl mx-auto",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "text-center mb-16 motion-preset-slide-up",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-4",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+										className: "w-4 h-4",
+										fill: "none",
+										stroke: "currentColor",
+										viewBox: "0 0 24 24",
+										strokeWidth: 2,
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+											strokeLinecap: "round",
+											strokeLinejoin: "round",
+											d: "M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+										})
+									}), "Why Terionix"]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+									className: "font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4",
+									children: whyTerionix.heading
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-text/60 max-w-2xl mx-auto",
+									children: whyTerionix.subtitle
+								})
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "grid md:grid-cols-3 gap-6 lg:gap-8",
+							children: whyTerionix.pillars.map((pillar, i) => {
+								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: `group bg-white/40 backdrop-blur-sm rounded-2xl border p-8 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover motion-preset-slide-up ${[
+										"border-primary/20 hover:border-primary/40",
+										"border-secondary/20 hover:border-secondary/40",
+										"border-accent/20 hover:border-accent/40"
+									][i]}`,
+									style: { animationDelay: `${i * 150}ms` },
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: `w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:text-white ${[
+												"bg-primary/10 text-primary group-hover:bg-primary",
+												"bg-secondary/10 text-secondary group-hover:bg-secondary",
+												"bg-accent/10 text-accent group-hover:bg-accent"
+											][i]}`,
+											children: [
+												pillar.icon === "lock" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+													className: "w-7 h-7",
+													fill: "none",
+													stroke: "currentColor",
+													viewBox: "0 0 24 24",
+													strokeWidth: 1.5,
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+														strokeLinecap: "round",
+														strokeLinejoin: "round",
+														d: "M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+													})
+												}),
+												pillar.icon === "shield" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+													className: "w-7 h-7",
+													fill: "none",
+													stroke: "currentColor",
+													viewBox: "0 0 24 24",
+													strokeWidth: 1.5,
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+														strokeLinecap: "round",
+														strokeLinejoin: "round",
+														d: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+													})
+												}),
+												pillar.icon === "trending" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+													className: "w-7 h-7",
+													fill: "none",
+													stroke: "currentColor",
+													viewBox: "0 0 24 24",
+													strokeWidth: 1.5,
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+														strokeLinecap: "round",
+														strokeLinejoin: "round",
+														d: "M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+													})
+												})
+											]
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+											className: `font-title text-xl font-bold text-text mb-4 transition-colors
+                      ${i === 0 ? "group-hover:text-primary" : ""}
+                      ${i === 1 ? "group-hover:text-secondary" : ""}
+                      ${i === 2 ? "group-hover:text-accent" : ""}
+                    `,
+											children: pillar.title
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "text-text/60 leading-relaxed text-sm",
+											children: pillar.body
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `mt-6 w-12 h-1 rounded-full transition-all duration-500 group-hover:w-full
+                      ${i === 0 ? "bg-primary/30 group-hover:bg-primary" : ""}
+                      ${i === 1 ? "bg-secondary/30 group-hover:bg-secondary" : ""}
+                      ${i === 2 ? "bg-accent/30 group-hover:bg-accent" : ""}
+                    ` })
+									]
+								}, i);
+							})
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "px-4 py-24 relative",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "max-w-6xl mx-auto",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "text-center mb-16 motion-preset-slide-up",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-4",
+									children: "Our Core Pillars"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+									className: "font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-4",
+									children: ["Built on ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-gradient",
+										children: "Trust & Innovation"
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-text/60 max-w-2xl mx-auto",
+									children: "Three pillars that define every aspect of our e-waste management services."
+								})
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "grid md:grid-cols-3 gap-6 lg:gap-8",
+							children: matrixCards.map((card, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "group bg-white/40 backdrop-blur-sm rounded-2xl border border-primary/10 p-8 hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 card-hover motion-preset-slide-up",
+								style: { animationDelay: `${i * 150}ms` },
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: `w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 
+                    ${i === 0 ? "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white" : ""}
+                    ${i === 1 ? "bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-white" : ""}
+                    ${i === 2 ? "bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white" : ""}
+                  `,
+										children: [
+											card.icon === "shield" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-7 h-7",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 1.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+												})
+											}),
+											card.icon === "lock" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-7 h-7",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 1.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+												})
+											}),
+											card.icon === "cpu" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-7 h-7",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 1.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+												})
+											})
+										]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										className: "font-title text-xl font-bold text-text mb-3 group-hover:text-primary transition-colors",
+										children: card.title
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-text/60 leading-relaxed mb-6 text-sm",
+										children: card.description
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+                    ${i === 0 ? "bg-primary/10 text-primary" : ""}
+                    ${i === 1 ? "bg-secondary/10 text-secondary" : ""}
+                    ${i === 2 ? "bg-accent/10 text-accent" : ""}
+                  `,
+										children: [
+											card.statIcon === "check" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-3.5 h-3.5",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 2.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M4.5 12.75l6 6 9-13.5"
+												})
+											}),
+											card.statIcon === "shield" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-3.5 h-3.5",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 2.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+												})
+											}),
+											card.statIcon === "trending" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-3.5 h-3.5",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 2.5,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+												})
+											}),
+											card.stat
+										]
+									})
+								]
+							}, i))
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					className: "px-4 py-24 relative",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 section-divider" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-40 left-10 w-80 h-80 bg-secondary/5 rounded-full blur-3xl -z-10" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "max-w-5xl mx-auto motion-preset-slide-up",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ImpactCalculator, {
+								title: impactCalculator.title,
+								description: impactCalculator.description,
+								items: impactCalculator.items
+							})
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+					ref: gameRef,
+					className: "px-4 py-24 relative scroll-mt-24",
+					id: "game-section",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 left-0 right-0 section-divider" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "max-w-5xl mx-auto",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "text-center mb-12 motion-preset-slide-up",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold mb-4",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+												className: "w-4 h-4",
+												fill: "none",
+												stroke: "currentColor",
+												viewBox: "0 0 24 24",
+												strokeWidth: 2,
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+													strokeLinecap: "round",
+													strokeLinejoin: "round",
+													d: "M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+												})
+											}), "Take the E-Waste Challenge"]
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+											className: "font-title text-3xl sm:text-4xl font-bold text-text mb-4",
+											children: ["Test Your ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												className: "text-gradient",
+												children: "Recycling IQ"
+											})]
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "text-text/60 max-w-xl mx-auto",
+											children: "Learn what's recyclable while racing against the clock. Complete the challenge and schedule a cleanup drive."
+										})
+									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "bg-white/50 backdrop-blur-xl rounded-3xl border border-primary/10 p-8 max-w-md mx-auto shadow-2xl shadow-primary/5 motion-preset-pop motion-duration-700 card-hover",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RecyclingGame, { items: content.game.items }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Leaderboard, {})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "text-center mt-8 text-sm text-text/40 motion-preset-fade",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "inline-flex items-center gap-1.5",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+											className: "w-4 h-4",
+											fill: "none",
+											stroke: "currentColor",
+											viewBox: "0 0 24 24",
+											strokeWidth: 1.5,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+												strokeLinecap: "round",
+												strokeLinejoin: "round",
+												d: "M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+											})
+										}), "Complete the challenge and schedule a free household e-waste pickup"]
+									})
+								})
+							]
+						})
+					]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "h-1 bg-gradient-to-r from-primary via-secondary to-accent relative",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 blur-sm" })
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("footer", {
+					className: "bg-background/80 py-12 px-4",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "max-w-6xl mx-auto",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "grid md:grid-cols-5 gap-8 mb-8",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "md:col-span-2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+										src: content.site.logo,
+										alt: content.site.name,
+										className: "h-20 w-auto mb-4"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-text/50 text-sm leading-relaxed max-w-md",
+										children: "Responsible e-waste management for a sustainable future. TNPCB authorized, CPCB compliant."
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
+									className: "font-title font-bold text-text text-sm mb-3 uppercase tracking-wider",
+									children: "Quick Links"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "space-y-2",
+									children: content.navbar.links.map((link) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: link.children?.map((child) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										to: child.to,
+										className: "block text-sm text-text/50 hover:text-primary transition-colors",
+										children: child.name
+									}, child.name)) }, link.name))
+								})] }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
+									className: "font-title font-bold text-text text-sm mb-3 uppercase tracking-wider",
+									children: "Contact"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "space-y-2 text-sm text-text/50",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Tamil Nadu, India" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										to: "/contact",
+										className: "block text-primary hover:text-primary-deep transition-colors font-medium",
+										children: "Get in Touch"
+									})]
+								})] }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
+										className: "font-title font-bold text-text text-sm mb-3 uppercase tracking-wider",
+										children: "Follow Us"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "flex flex-wrap gap-3",
+										children: content.social?.links?.map((link) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+											href: link.url,
+											target: "_blank",
+											rel: "noopener noreferrer",
+											className: "w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center text-text/40 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200",
+											"aria-label": link.label,
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FooterSocialIcon, { platform: link.platform })
+										}, link.platform))
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-xs text-text/30 mt-3",
+										children: "Follow us for sustainability updates and e-waste tips."
+									})
+								] })
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "border-t border-primary/10 pt-6 text-center",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+								className: "text-xs text-text/30",
+								children: [
+									"© ",
+									(/* @__PURE__ */ new Date()).getFullYear(),
+									" Terionix. All rights reserved. — Where Circuits Bloom."
+								]
+							})
+						})]
+					})
+				})
+			]
+		})]
+	});
+}
+function FooterSocialIcon({ platform }) {
+	const paths = {
+		linkedin: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z",
+		instagram: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z",
+		facebook: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
+		twitter: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+		youtube: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+		className: "w-4 h-4",
+		viewBox: "0 0 24 24",
+		fill: "currentColor",
+		xmlns: "http://www.w3.org/2000/svg",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: paths[platform] || paths.linkedin })
+	});
+}
+//#endregion
+export { Home as component };

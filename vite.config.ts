@@ -9,9 +9,19 @@ import { nitro } from 'nitro/vite'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8001',
+    },
+  },
   plugins: [
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+    nitro({
+      rollupConfig: { external: [/^@sentry\//] },
+      routeRules: {
+        '/api/**': { proxy: `${process.env.API_PROXY_TARGET || 'http://localhost:8001'}/api/**` },
+      },
+    }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),

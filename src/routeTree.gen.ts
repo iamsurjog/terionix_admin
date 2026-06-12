@@ -9,302 +9,224 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SolutionsRouteImport } from './routes/solutions'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as LearnRouteImport } from './routes/learn'
-import { Route as JsonRouteImport } from './routes/json'
-import { Route as InnovationRouteImport } from './routes/innovation'
-import { Route as ImpactInsightsRouteImport } from './routes/impact-insights'
-import { Route as HomeRouteImport } from './routes/home'
-import { Route as HistoryRouteImport } from './routes/history'
-import { Route as GameRouteImport } from './routes/game'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CareersRouteImport } from './routes/careers'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminSolutionsRouteImport } from './routes/admin/solutions'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminLearnRouteImport } from './routes/admin/learn'
+import { Route as AdminJsonRouteImport } from './routes/admin/json'
+import { Route as AdminInnovationRouteImport } from './routes/admin/innovation'
+import { Route as AdminImpactInsightsRouteImport } from './routes/admin/impact-insights'
+import { Route as AdminHomeRouteImport } from './routes/admin/home'
+import { Route as AdminHistoryRouteImport } from './routes/admin/history'
+import { Route as AdminGameRouteImport } from './routes/admin/game'
+import { Route as AdminContactRouteImport } from './routes/admin/contact'
+import { Route as AdminCareersRouteImport } from './routes/admin/careers'
+import { Route as AdminAboutRouteImport } from './routes/admin/about'
 
-const SolutionsRoute = SolutionsRouteImport.update({
-  id: '/solutions',
-  path: '/solutions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearnRoute = LearnRouteImport.update({
-  id: '/learn',
-  path: '/learn',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JsonRoute = JsonRouteImport.update({
-  id: '/json',
-  path: '/json',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InnovationRoute = InnovationRouteImport.update({
-  id: '/innovation',
-  path: '/innovation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImpactInsightsRoute = ImpactInsightsRouteImport.update({
-  id: '/impact-insights',
-  path: '/impact-insights',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HomeRoute = HomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HistoryRoute = HistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GameRoute = GameRouteImport.update({
-  id: '/game',
-  path: '/game',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSolutionsRoute = AdminSolutionsRouteImport.update({
+  id: '/admin/solutions',
+  path: '/admin/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLearnRoute = AdminLearnRouteImport.update({
+  id: '/admin/learn',
+  path: '/admin/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminJsonRoute = AdminJsonRouteImport.update({
+  id: '/admin/json',
+  path: '/admin/json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminInnovationRoute = AdminInnovationRouteImport.update({
+  id: '/admin/innovation',
+  path: '/admin/innovation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminImpactInsightsRoute = AdminImpactInsightsRouteImport.update({
+  id: '/admin/impact-insights',
+  path: '/admin/impact-insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminHomeRoute = AdminHomeRouteImport.update({
+  id: '/admin/home',
+  path: '/admin/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminHistoryRoute = AdminHistoryRouteImport.update({
+  id: '/admin/history',
+  path: '/admin/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGameRoute = AdminGameRouteImport.update({
+  id: '/admin/game',
+  path: '/admin/game',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminContactRoute = AdminContactRouteImport.update({
+  id: '/admin/contact',
+  path: '/admin/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCareersRoute = AdminCareersRouteImport.update({
+  id: '/admin/careers',
+  path: '/admin/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAboutRoute = AdminAboutRouteImport.update({
+  id: '/admin/about',
+  path: '/admin/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/game': typeof GameRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/impact-insights': typeof ImpactInsightsRoute
-  '/innovation': typeof InnovationRoute
-  '/json': typeof JsonRoute
-  '/learn': typeof LearnRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/solutions': typeof SolutionsRoute
+  '/admin/about': typeof AdminAboutRoute
+  '/admin/careers': typeof AdminCareersRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/game': typeof AdminGameRoute
+  '/admin/history': typeof AdminHistoryRoute
+  '/admin/home': typeof AdminHomeRoute
+  '/admin/impact-insights': typeof AdminImpactInsightsRoute
+  '/admin/innovation': typeof AdminInnovationRoute
+  '/admin/json': typeof AdminJsonRoute
+  '/admin/learn': typeof AdminLearnRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/solutions': typeof AdminSolutionsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/game': typeof GameRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/impact-insights': typeof ImpactInsightsRoute
-  '/innovation': typeof InnovationRoute
-  '/json': typeof JsonRoute
-  '/learn': typeof LearnRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/solutions': typeof SolutionsRoute
+  '/admin/about': typeof AdminAboutRoute
+  '/admin/careers': typeof AdminCareersRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/game': typeof AdminGameRoute
+  '/admin/history': typeof AdminHistoryRoute
+  '/admin/home': typeof AdminHomeRoute
+  '/admin/impact-insights': typeof AdminImpactInsightsRoute
+  '/admin/innovation': typeof AdminInnovationRoute
+  '/admin/json': typeof AdminJsonRoute
+  '/admin/learn': typeof AdminLearnRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/solutions': typeof AdminSolutionsRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/game': typeof GameRoute
-  '/history': typeof HistoryRoute
-  '/home': typeof HomeRoute
-  '/impact-insights': typeof ImpactInsightsRoute
-  '/innovation': typeof InnovationRoute
-  '/json': typeof JsonRoute
-  '/learn': typeof LearnRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/solutions': typeof SolutionsRoute
+  '/admin/about': typeof AdminAboutRoute
+  '/admin/careers': typeof AdminCareersRoute
+  '/admin/contact': typeof AdminContactRoute
+  '/admin/game': typeof AdminGameRoute
+  '/admin/history': typeof AdminHistoryRoute
+  '/admin/home': typeof AdminHomeRoute
+  '/admin/impact-insights': typeof AdminImpactInsightsRoute
+  '/admin/innovation': typeof AdminInnovationRoute
+  '/admin/json': typeof AdminJsonRoute
+  '/admin/learn': typeof AdminLearnRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/solutions': typeof AdminSolutionsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/careers'
-    | '/contact'
-    | '/game'
-    | '/history'
-    | '/home'
-    | '/impact-insights'
-    | '/innovation'
-    | '/json'
-    | '/learn'
-    | '/login'
-    | '/settings'
-    | '/solutions'
+    | '/admin/about'
+    | '/admin/careers'
+    | '/admin/contact'
+    | '/admin/game'
+    | '/admin/history'
+    | '/admin/home'
+    | '/admin/impact-insights'
+    | '/admin/innovation'
+    | '/admin/json'
+    | '/admin/learn'
+    | '/admin/login'
+    | '/admin/settings'
+    | '/admin/solutions'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/careers'
-    | '/contact'
-    | '/game'
-    | '/history'
-    | '/home'
-    | '/impact-insights'
-    | '/innovation'
-    | '/json'
-    | '/learn'
-    | '/login'
-    | '/settings'
-    | '/solutions'
+    | '/admin/about'
+    | '/admin/careers'
+    | '/admin/contact'
+    | '/admin/game'
+    | '/admin/history'
+    | '/admin/home'
+    | '/admin/impact-insights'
+    | '/admin/innovation'
+    | '/admin/json'
+    | '/admin/learn'
+    | '/admin/login'
+    | '/admin/settings'
+    | '/admin/solutions'
+    | '/admin'
   id:
     | '__root__'
     | '/'
-    | '/about'
-    | '/careers'
-    | '/contact'
-    | '/game'
-    | '/history'
-    | '/home'
-    | '/impact-insights'
-    | '/innovation'
-    | '/json'
-    | '/learn'
-    | '/login'
-    | '/settings'
-    | '/solutions'
+    | '/admin/about'
+    | '/admin/careers'
+    | '/admin/contact'
+    | '/admin/game'
+    | '/admin/history'
+    | '/admin/home'
+    | '/admin/impact-insights'
+    | '/admin/innovation'
+    | '/admin/json'
+    | '/admin/learn'
+    | '/admin/login'
+    | '/admin/settings'
+    | '/admin/solutions'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  CareersRoute: typeof CareersRoute
-  ContactRoute: typeof ContactRoute
-  GameRoute: typeof GameRoute
-  HistoryRoute: typeof HistoryRoute
-  HomeRoute: typeof HomeRoute
-  ImpactInsightsRoute: typeof ImpactInsightsRoute
-  InnovationRoute: typeof InnovationRoute
-  JsonRoute: typeof JsonRoute
-  LearnRoute: typeof LearnRoute
-  LoginRoute: typeof LoginRoute
-  SettingsRoute: typeof SettingsRoute
-  SolutionsRoute: typeof SolutionsRoute
+  AdminAboutRoute: typeof AdminAboutRoute
+  AdminCareersRoute: typeof AdminCareersRoute
+  AdminContactRoute: typeof AdminContactRoute
+  AdminGameRoute: typeof AdminGameRoute
+  AdminHistoryRoute: typeof AdminHistoryRoute
+  AdminHomeRoute: typeof AdminHomeRoute
+  AdminImpactInsightsRoute: typeof AdminImpactInsightsRoute
+  AdminInnovationRoute: typeof AdminInnovationRoute
+  AdminJsonRoute: typeof AdminJsonRoute
+  AdminLearnRoute: typeof AdminLearnRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSolutionsRoute: typeof AdminSolutionsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/solutions': {
-      id: '/solutions'
-      path: '/solutions'
-      fullPath: '/solutions'
-      preLoaderRoute: typeof SolutionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learn': {
-      id: '/learn'
-      path: '/learn'
-      fullPath: '/learn'
-      preLoaderRoute: typeof LearnRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/json': {
-      id: '/json'
-      path: '/json'
-      fullPath: '/json'
-      preLoaderRoute: typeof JsonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/innovation': {
-      id: '/innovation'
-      path: '/innovation'
-      fullPath: '/innovation'
-      preLoaderRoute: typeof InnovationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/impact-insights': {
-      id: '/impact-insights'
-      path: '/impact-insights'
-      fullPath: '/impact-insights'
-      preLoaderRoute: typeof ImpactInsightsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/history': {
-      id: '/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof HistoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/game': {
-      id: '/game'
-      path: '/game'
-      fullPath: '/game'
-      preLoaderRoute: typeof GameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -312,24 +234,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/solutions': {
+      id: '/admin/solutions'
+      path: '/admin/solutions'
+      fullPath: '/admin/solutions'
+      preLoaderRoute: typeof AdminSolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/learn': {
+      id: '/admin/learn'
+      path: '/admin/learn'
+      fullPath: '/admin/learn'
+      preLoaderRoute: typeof AdminLearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/json': {
+      id: '/admin/json'
+      path: '/admin/json'
+      fullPath: '/admin/json'
+      preLoaderRoute: typeof AdminJsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/innovation': {
+      id: '/admin/innovation'
+      path: '/admin/innovation'
+      fullPath: '/admin/innovation'
+      preLoaderRoute: typeof AdminInnovationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/impact-insights': {
+      id: '/admin/impact-insights'
+      path: '/admin/impact-insights'
+      fullPath: '/admin/impact-insights'
+      preLoaderRoute: typeof AdminImpactInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/home': {
+      id: '/admin/home'
+      path: '/admin/home'
+      fullPath: '/admin/home'
+      preLoaderRoute: typeof AdminHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/history': {
+      id: '/admin/history'
+      path: '/admin/history'
+      fullPath: '/admin/history'
+      preLoaderRoute: typeof AdminHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/game': {
+      id: '/admin/game'
+      path: '/admin/game'
+      fullPath: '/admin/game'
+      preLoaderRoute: typeof AdminGameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contact': {
+      id: '/admin/contact'
+      path: '/admin/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AdminContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/careers': {
+      id: '/admin/careers'
+      path: '/admin/careers'
+      fullPath: '/admin/careers'
+      preLoaderRoute: typeof AdminCareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/about': {
+      id: '/admin/about'
+      path: '/admin/about'
+      fullPath: '/admin/about'
+      preLoaderRoute: typeof AdminAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  CareersRoute: CareersRoute,
-  ContactRoute: ContactRoute,
-  GameRoute: GameRoute,
-  HistoryRoute: HistoryRoute,
-  HomeRoute: HomeRoute,
-  ImpactInsightsRoute: ImpactInsightsRoute,
-  InnovationRoute: InnovationRoute,
-  JsonRoute: JsonRoute,
-  LearnRoute: LearnRoute,
-  LoginRoute: LoginRoute,
-  SettingsRoute: SettingsRoute,
-  SolutionsRoute: SolutionsRoute,
+  AdminAboutRoute: AdminAboutRoute,
+  AdminCareersRoute: AdminCareersRoute,
+  AdminContactRoute: AdminContactRoute,
+  AdminGameRoute: AdminGameRoute,
+  AdminHistoryRoute: AdminHistoryRoute,
+  AdminHomeRoute: AdminHomeRoute,
+  AdminImpactInsightsRoute: AdminImpactInsightsRoute,
+  AdminInnovationRoute: AdminInnovationRoute,
+  AdminJsonRoute: AdminJsonRoute,
+  AdminLearnRoute: AdminLearnRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSolutionsRoute: AdminSolutionsRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
