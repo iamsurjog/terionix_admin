@@ -41,7 +41,7 @@ interface ContactSubmission {
 }
 
 interface EmailConfigResponse {
-  send_to: string
+  to_email: string
 }
 
 // ── Helpers ────────────────────────────────────────────
@@ -125,7 +125,7 @@ function ContactRequestsPage() {
     setError(null)
     try {
       const params = buildFilterParams(type, from, to)
-      const res = await apiFetch(`/submissions/?${params.toString()}`)
+      const res = await apiFetch(`/submissions?${params.toString()}`)
       if (!res.ok) throw new Error(`Failed to fetch submissions: ${res.status}`)
       const json = await res.json()
       // Support both paginated { results: [...] } and plain arrays
@@ -140,10 +140,10 @@ function ContactRequestsPage() {
 
   const fetchEmailConfig = async () => {
     try {
-      const res = await apiFetch('/email-config/')
+      const res = await apiFetch('/email-config')
       if (res.ok) {
         const json: EmailConfigResponse = await res.json()
-        setEmailAddress(json.send_to || '')
+        setEmailAddress(json.to_email || '')
       }
     } catch {
       // Config may not exist yet
@@ -237,7 +237,7 @@ function ContactRequestsPage() {
   const buildExportUrl = (format: 'csv' | 'json') => {
     const params = buildFilterParams(submissionTypeFilter, dateFrom, dateTo)
     const qs = params.toString()
-    return `/api/submissions/export/${format}/${qs ? `?${qs}` : ''}`
+    return `/api/submissions/export/${format}${qs ? `?${qs}` : ''}`
   }
 
   const handleExportCSV = () => {
@@ -253,9 +253,9 @@ function ContactRequestsPage() {
   const handleSaveEmailConfig = async () => {
     setEmailSaveMsg(null)
     try {
-      const res = await apiFetch('/email-config/', {
+      const res = await apiFetch('/email-config', {
         method: 'POST',
-        body: JSON.stringify({ send_to: emailAddress }),
+        body: JSON.stringify({ to_email: emailAddress }),
       })
       if (!res.ok) throw new Error(`Failed to save: ${res.status}`)
       setEmailSaveMsg({ type: 'success', text: 'Email configuration saved successfully' })
@@ -277,13 +277,16 @@ function ContactRequestsPage() {
     try {
       const params = buildFilterParams(submissionTypeFilter, dateFrom, dateTo)
       const res = await apiFetch(
-        `/submissions/send-email/?${params.toString()}`,
+        `/submissions/send-email?${params.toString()}`,
         {
           method: 'POST',
-          body: JSON.stringify({ send_to: emailAddress }),
+          body: JSON.stringify({ to_email: emailAddress }),
         },
       )
-      if (!res.ok) throw new Error(`Failed to send: ${res.status}`)
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || `Failed to send: ${res.status}`)
+      }
       setSendEmailMsg({ type: 'success', text: 'Email sent successfully!' })
       // Track last send time
       localStorage.setItem('terionix_auto_send_last', new Date().toISOString())
@@ -299,10 +302,18 @@ function ContactRequestsPage() {
 
   // ── Auto-send status ───────────────────────────────
 
-  const lastAutoSend = localStorage.getItem('terionix_auto_send_last')
-  const autoSendStatusText = lastAutoSend
-    ? `Last send: ${formatDateTime(lastAutoSend)} — Daily auto-send scheduled for 6:00 AM`
-    : 'Daily auto-send scheduled for 6:00 AM'
+  const [autoSendStatusText, setAutoSendStatusText] = useState(
+    'Daily auto-send scheduled for 6:00 AM'
+  )
+
+  useEffect(() => {
+    const lastAutoSend = localStorage.getItem('terionix_auto_send_last')
+    if (lastAutoSend) {
+      setAutoSendStatusText(
+        `Last send: ${formatDateTime(lastAutoSend)} — Daily auto-send scheduled for 6:00 AM`
+      )
+    }
+  }, [])
 
   // ── Render ─────────────────────────────────────────
 
