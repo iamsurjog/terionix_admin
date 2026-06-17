@@ -5,7 +5,7 @@ import { AdminNavbar } from '#/components/AdminNavbar'
 import { readContent } from '#/lib/content'
 import { AdminSection, Field, Input, Textarea, writeSection } from '#/components/AdminSection'
 
-export const Route = createFileRoute('/admin/impact-insights')({
+export const Route = createFileRoute('/content/impact-insights')({
   loader: async () => readContent(),
   component: AdminImpactInsights,
 })

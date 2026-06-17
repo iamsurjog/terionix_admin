@@ -6,7 +6,7 @@ import { AdminNavbar } from '#/components/AdminNavbar'
 import { readContent, updatePassword } from '#/lib/content'
 import { AdminSection, Field, Input, writeSection } from '#/components/AdminSection'
 
-export const Route = createFileRoute('/admin/settings')({
+export const Route = createFileRoute('/content/settings')({
   loader: async () => readContent(),
   component: AdminSettings,
 })

@@ -4,7 +4,7 @@ import { AdminNavbar } from '#/components/AdminNavbar'
 import { readContent } from '#/lib/content'
 import { isAuthenticated } from '#/lib/auth'
 
-export const Route = createFileRoute('/admin/')({
+export const Route = createFileRoute('/content/')({
   loader: async () => readContent(),
   component: AdminDashboard,
 })

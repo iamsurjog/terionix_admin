@@ -7,7 +7,7 @@ function getCsrfToken(): string {
   return match ? match[1] : ''
 }
 
-async function apiFetch(path: string, options: RequestInit = {}): Promise<Response> {
+export export async function apiFetch(path: string, options: RequestInit = {}): Promise<Response> {
   const isFormData = options.body instanceof FormData
   const headers: Record<string, string> = {}
   if (!isFormData) {

@@ -5,22 +5,22 @@ import { AdminNavbar } from '#/components/AdminNavbar'
 import { readContent } from '#/lib/content'
 import { AdminSection, Field, Input, Textarea, writeSection } from '#/components/AdminSection'
 
-export const Route = createFileRoute('/admin/innovation')({
+export const Route = createFileRoute('/content/solutions')({
   loader: async () => readContent(),
-  component: AdminInnovation,
+  component: AdminSolutions,
 })
 
-function AdminInnovation() {
+function AdminSolutions() {
   const navigate = useNavigate()
   useEffect(() => { if (!isAuthenticated()) navigate({ to: '/admin/login' }) }, [navigate])
   const data = Route.useLoaderData()!
   return (
     <div className="font-sans text-text">
-      <AdminNavbar active="Innovation" links={data.navbar.links} logo={data.site.logo} siteName={data.site.name} />
+      <AdminNavbar active="Solutions" links={data.navbar.links} logo={data.site.logo} siteName={data.site.name} />
       <AdminSection
-        title="Innovation Page"
-        onSave={(vals) => writeSection('innovation', vals)}
-        defaultValues={data.innovation}
+        title="Solutions Page"
+        onSave={(vals) => writeSection('solutions', vals)}
+        defaultValues={data.solutions}
         validate={(v: unknown) => {
           const o = v as { heading?: { prefix?: string; highlight?: string }; intro?: string }
           if (!o.heading?.prefix?.trim()) return 'Heading prefix is required'
@@ -33,23 +33,23 @@ function AdminInnovation() {
           <>
             <div className="grid grid-cols-2 gap-4">
               <Field label="Heading Prefix">
-                <Input value={values.heading.prefix} onChange={(v) => onChange('heading.prefix', v)} placeholder="e.g. Innovation at" />
+                <Input value={values.heading.prefix} onChange={(v) => onChange('heading.prefix', v)} placeholder="e.g. Our" />
               </Field>
               <Field label="Heading Highlight">
-                <Input value={values.heading.highlight} onChange={(v) => onChange('heading.highlight', v)} placeholder="e.g. Terionix" />
+                <Input value={values.heading.highlight} onChange={(v) => onChange('heading.highlight', v)} placeholder="e.g. Solutions" />
               </Field>
             </div>
             <Field label="Intro Text">
               <Textarea value={values.intro} onChange={(v) => onChange('intro', v)} placeholder="Page intro" rows={2} />
             </Field>
             <div className="space-y-4">
-              <h3 className="font-medium text-sm">Innovation Sections</h3>
-              {values.sections?.map((sec: { id: string; title: string; body: string; highlights: string[] }, i: number) => (
+              <h3 className="font-medium text-sm">Solution Sections</h3>
+              {values.sections?.map((sec: { id: string; title: string; body: string; features: string[] }, i: number) => (
                 <div key={i} className="p-4 bg-white/50 rounded-lg border border-primary/10 space-y-2">
                   <div className="text-xs text-text/50 font-medium uppercase tracking-wide">Section {i + 1}</div>
                   <div className="grid grid-cols-2 gap-3">
                     <Field label="ID (slug)">
-                      <Input value={sec.id} onChange={(v) => onChange(`sections.${i}.id`, v)} placeholder="labs" />
+                      <Input value={sec.id} onChange={(v) => onChange(`sections.${i}.id`, v)} placeholder="collection" />
                     </Field>
                     <Field label="Title">
                       <Input value={sec.title} onChange={(v) => onChange(`sections.${i}.title`, v)} placeholder="Section title" />
@@ -59,10 +59,10 @@ function AdminInnovation() {
                     <Textarea value={sec.body} onChange={(v) => onChange(`sections.${i}.body`, v)} rows={2} />
                   </Field>
                   <div className="space-y-2">
-                    <div className="text-xs font-medium text-text/60">Highlights</div>
-                    {sec.highlights?.map((hl: string, j: number) => (
+                    <div className="text-xs font-medium text-text/60">Features</div>
+                    {sec.features?.map((feat: string, j: number) => (
                       <Field key={j} label="">
-                        <Input value={hl} onChange={(v) => onChange(`sections.${i}.highlights.${j}`, v)} placeholder="Highlight text" />
+                        <Input value={feat} onChange={(v) => onChange(`sections.${i}.features.${j}`, v)} placeholder="Feature text" />
                       </Field>
                     ))}
                   </div>

@@ -6,7 +6,7 @@ import { AdminSection, Field, Input, writeSection } from '#/components/AdminSect
 import { useState } from 'react'
 import { isAuthenticated } from '#/lib/auth'
 
-export const Route = createFileRoute('/admin/game')({
+export const Route = createFileRoute('/content/game')({
   loader: async () => readContent(),
   component: AdminGame,
 })

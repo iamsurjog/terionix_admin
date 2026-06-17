@@ -4,7 +4,7 @@ import { AdminNavbar } from '#/components/AdminNavbar'
 import { readContent, contentAction } from '#/lib/content'
 import { isAuthenticated } from '#/lib/auth'
 
-export const Route = createFileRoute('/admin/json')({
+export const Route = createFileRoute('/content/json')({
   loader: async () => readContent(),
   component: AdminJson,
 })
