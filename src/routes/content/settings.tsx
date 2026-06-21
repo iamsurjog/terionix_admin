@@ -124,7 +124,7 @@ function PasswordSection() {
 
 function AdminSettings() {
   const navigate = useNavigate()
-  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/admin/login' }) }, [navigate])
+  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/content/login' }) }, [navigate])
   const data = Route.useLoaderData()!
   return (
     <div className="font-sans text-text">

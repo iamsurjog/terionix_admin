@@ -11,7 +11,7 @@ export const Route = createFileRoute('/content/json')({
 
 function AdminJson() {
   const navigate = useNavigate()
-  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/admin/login' }) }, [navigate])
+  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/content/login' }) }, [navigate])
   const data = Route.useLoaderData()!
   const [copied, setCopied] = useState(false)
   const [search, setSearch] = useState('')

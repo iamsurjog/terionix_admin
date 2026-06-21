@@ -14,8 +14,8 @@ function AdminLogin() {
 
   // If already logged in, redirect to admin dashboard
   if (isAuthenticated()) {
-    navigate({ to: '/admin' })
-    return null
+    navigate({ to: '/' })
+            return null
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +25,7 @@ function AdminLogin() {
     try {
       const ok = await login(password)
       if (ok) {
-        navigate({ to: '/admin' })
+        navigate({ to: '/' })
       } else {
         setError(true)
         setPassword('')

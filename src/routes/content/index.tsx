@@ -26,7 +26,7 @@ const sections = [
 
 function AdminDashboard() {
   const navigate = useNavigate()
-  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/admin/login' }) }, [navigate])
+  useEffect(() => { if (!isAuthenticated()) navigate({ to: '/content/login' }) }, [navigate])
   const data = Route.useLoaderData()!
   return (
     <div className="font-sans text-text">
@@ -45,7 +45,7 @@ function AdminDashboard() {
             {sections.map((s, i) => (
               <a
                 key={s.key}
-                href={`/admin/${s.key}`}
+                href={`/content/${s.key}`}
                 style={{ animationDelay: `${(i + 1) * 100}ms` }}
                 className="group block p-6 rounded-2xl border border-primary/10 bg-white/40 backdrop-blur-sm hover:border-primary/30 hover:bg-white/60 hover:shadow-xl transition-all duration-500 motion-preset-slide-up"
               >
