@@ -9,4 +9,4 @@ npm install
 
 echo "🚀  Starting admin on http://localhost:3001"
 npm run build
-exec npm start
+exec node .output/server/index.mjs
