@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TendersRouteImport } from './routes/tenders'
 import { Route as ContactRequestsRouteImport } from './routes/contact-requests'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContentIndexRouteImport } from './routes/content/index'
@@ -26,6 +27,11 @@ import { Route as ContentContactRouteImport } from './routes/content/contact'
 import { Route as ContentCareersRouteImport } from './routes/content/careers'
 import { Route as ContentAboutRouteImport } from './routes/content/about'
 
+const TendersRoute = TendersRouteImport.update({
+  id: '/tenders',
+  path: '/tenders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRequestsRoute = ContactRequestsRouteImport.update({
   id: '/contact-requests',
   path: '/contact-requests',
@@ -110,6 +116,7 @@ const ContentAboutRoute = ContentAboutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact-requests': typeof ContactRequestsRoute
+  '/tenders': typeof TendersRoute
   '/content/about': typeof ContentAboutRoute
   '/content/careers': typeof ContentCareersRoute
   '/content/contact': typeof ContentContactRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact-requests': typeof ContactRequestsRoute
+  '/tenders': typeof TendersRoute
   '/content/about': typeof ContentAboutRoute
   '/content/careers': typeof ContentCareersRoute
   '/content/contact': typeof ContentContactRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact-requests': typeof ContactRequestsRoute
+  '/tenders': typeof TendersRoute
   '/content/about': typeof ContentAboutRoute
   '/content/careers': typeof ContentCareersRoute
   '/content/contact': typeof ContentContactRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact-requests'
+    | '/tenders'
     | '/content/about'
     | '/content/careers'
     | '/content/contact'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact-requests'
+    | '/tenders'
     | '/content/about'
     | '/content/careers'
     | '/content/contact'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact-requests'
+    | '/tenders'
     | '/content/about'
     | '/content/careers'
     | '/content/contact'
@@ -222,6 +234,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRequestsRoute: typeof ContactRequestsRoute
+  TendersRoute: typeof TendersRoute
   ContentAboutRoute: typeof ContentAboutRoute
   ContentCareersRoute: typeof ContentCareersRoute
   ContentContactRoute: typeof ContentContactRoute
@@ -240,6 +253,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tenders': {
+      id: '/tenders'
+      path: '/tenders'
+      fullPath: '/tenders'
+      preLoaderRoute: typeof TendersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact-requests': {
       id: '/contact-requests'
       path: '/contact-requests'
@@ -358,6 +378,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRequestsRoute: ContactRequestsRoute,
+  TendersRoute: TendersRoute,
   ContentAboutRoute: ContentAboutRoute,
   ContentCareersRoute: ContentCareersRoute,
   ContentContactRoute: ContentContactRoute,

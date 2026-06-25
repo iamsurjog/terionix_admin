@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { isAuthenticated } from '#/lib/auth'
-import { FileText, MessageSquare, ArrowRight, LayoutDashboard } from 'lucide-react'
+import { FileText, MessageSquare, ArrowRight, LayoutDashboard, ClipboardList } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: AdminDashboard,
@@ -29,6 +29,17 @@ const sections = [
     iconBg: 'bg-secondary/10',
     iconColor: 'text-secondary',
     borderHover: 'hover:border-secondary/30 hover:shadow-secondary/10',
+  },
+  {
+    key: 'tenders',
+    label: 'Tenders',
+    desc: 'View and refresh government tender data from eprocure.gov.in',
+    icon: ClipboardList,
+    to: '/tenders',
+    color: 'from-accent/20 via-accent/10 to-transparent',
+    iconBg: 'bg-accent/10',
+    iconColor: 'text-accent',
+    borderHover: 'hover:border-accent/30 hover:shadow-accent/10',
   },
 ]
 
@@ -69,7 +80,7 @@ function AdminDashboard() {
           </div>
 
           {/* Navigation Cards */}
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sections.map((s) => (
               <Link
                 key={s.key}

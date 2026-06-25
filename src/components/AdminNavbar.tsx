@@ -130,6 +130,14 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
             Game
           </a>
           <a
+            href="/tenders"
+            className={`px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${
+              active === 'Tenders' ? 'text-white bg-primary shadow-lg shadow-primary/25' : 'text-text/70 hover:text-primary hover:bg-primary/5'
+            }`}
+          >
+            Tenders
+          </a>
+          <a
             href="/content/json"
             className={`px-4 py-2 font-sans text-sm font-medium rounded-full transition-all duration-300 ${
               active === 'JSON' ? 'text-white bg-primary shadow-lg shadow-primary/25' : 'text-text/70 hover:text-primary hover:bg-primary/5'
@@ -173,6 +181,11 @@ export function AdminNavbar({ active, links, logo, siteName }: { active: string;
             className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === 'Recycling Game' ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'}`}
           >
             Game
+          </a>
+          <a href="/tenders" onClick={() => setOpen(false)}
+            className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === 'Tenders' ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'}`}
+          >
+            Tenders
           </a>
           <a href="/content/json" onClick={() => setOpen(false)}
             className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${active === 'JSON' ? 'text-white bg-primary shadow-lg shadow-primary/20' : 'text-text/70 hover:text-primary hover:bg-primary/5'}`}
