@@ -320,7 +320,7 @@ function TendersPage() {
                 type="text"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Search tenders by keyword..."
+                placeholder="Search tenders by keyword (comma-separated for OR)..."
                 className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-white/60 text-sm focus:outline-none focus:border-primary/50 transition-colors"
               />
             </div>
