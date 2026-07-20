@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, Fragment } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { isAuthenticated } from '#/lib/auth'
+import { isAuthenticated, logout } from '#/lib/auth'
 import { apiFetch } from '#/lib/content'
 import {
   useReactTable,
@@ -80,6 +80,11 @@ function ContactRequestsPage() {
   useEffect(() => {
     if (!isAuthenticated()) navigate({ to: '/content/login' })
   }, [navigate])
+
+  const handleLogout = async () => {
+    await logout()
+    navigate({ to: '/content/login' })
+  }
 
   // ── State ──────────────────────────────────────────
   const [data, setData] = useState<ContactSubmission[]>([])
@@ -319,6 +324,27 @@ function ContactRequestsPage() {
 
   return (
     <div className="font-sans text-text">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-primary/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <a href="/" className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-text/70 hover:text-primary hover:bg-primary/5 transition-all">
+              ← Dashboard
+            </a>
+            <div className="w-px h-8 bg-primary/20" />
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-accent motion-preset-pulse" />
+              <span className="text-xs font-semibold text-accent uppercase tracking-wider">Admin</span>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 font-sans text-sm font-medium rounded-full text-error hover:bg-error-soft transition-all"
+          >
+            Logout
+          </button>
+        </div>
+      </nav>
+
       <main className="max-w-6xl mx-auto pt-32 pb-24 px-4">
         <h1 className="font-title text-3xl font-bold mb-8">Contact Requests</h1>
 

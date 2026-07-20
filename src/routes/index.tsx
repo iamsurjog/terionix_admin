@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
 import { useEffect } from 'react'
-import { isAuthenticated } from '#/lib/auth'
+import { isAuthenticated, logout } from '#/lib/auth'
 import { FileText, MessageSquare, ArrowRight, LayoutDashboard, ClipboardList } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
@@ -60,9 +60,18 @@ function AdminDashboard() {
             </div>
             <span className="font-title font-bold text-lg">Admin Panel</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent motion-preset-pulse" />
-            <span className="text-xs font-semibold text-accent uppercase tracking-wider">Dashboard</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-accent motion-preset-pulse" />
+              <span className="text-xs font-semibold text-accent uppercase tracking-wider">Dashboard</span>
+            </div>
+            <div className="w-px h-8 bg-primary/20" />
+            <button
+              onClick={async () => { await logout(); navigate({ to: '/content/login' }) }}
+              className="px-4 py-2 font-sans text-sm font-medium rounded-full text-error hover:bg-error-soft transition-all"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </header>
